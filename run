@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status, an unset variable is used, or a pipeline fails
+set -euf -o pipefail
+
+# Display usage information
+usage() {
+    echo ""
+    echo "Usage: $0 {lint|test}"
+    echo ""
+    echo "Available commands:"
+    echo "  lint  - Run code quality checks (Android Lint, Ktlint, Detekt)"
+    echo "  test  - Run unit test"
+    echo ""
+    exit 1
+}
+
+# Check if an argument is provided
+if [[ $# -eq 0 ]]; then
+    echo "Error: No command provided."
+    usage
+fi
+
+case "$1" in
+    lint)
+        echo "Starting code quality checks..."
+
+        echo ""
+        echo "Step 1: Cleaning previous build artifacts..."
+        ./gradlew clean
+
+        echo ""
+        echo "Step 2: Running Android Lint..."
+        ./gradlew lintDebug
+
+        echo ""
+        echo "Step 3: Running Ktlint..."
+        ./gradlew ktlintCheck
+
+        echo ""
+        echo "Step 4: Running Detekt analysis..."
+        ./gradlew detekt
+
+        echo ""
+        echo "Step 5: Cleaning up after checks..."
+        ./gradlew clean
+
+        echo ""
+        echo "✅  Code quality checks completed successfully."
+        ;;
+    test)
+        echo "Starting unit test..."
+
+        echo ""
+        ./gradlew clean testDebugUnitTest
+
+        echo ""
+        echo "✅  Unit test completed successfully."
+        ;;
+    *)
+        echo "Error: Invalid command '$1'"
+        usage
+        ;;
+esac
