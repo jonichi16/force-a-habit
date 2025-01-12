@@ -1,4 +1,4 @@
-package com.jonichi.forceahabit.ui.theme
+package com.jonichi.uicommon.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
