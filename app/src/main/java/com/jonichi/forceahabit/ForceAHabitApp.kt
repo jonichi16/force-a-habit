@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jonichi.habit.ui.HabitList
 
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
@@ -23,6 +24,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             composable(
                 route = ForceAHabitScreen.Home.name,
             ) {
+                HabitList()
             }
         }
     }
