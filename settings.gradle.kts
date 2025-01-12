@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Force A Habit"
 include(":app")
 include(":feature:habit")
+include(":lib:uicommon")
