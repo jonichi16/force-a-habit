@@ -1,10 +1,10 @@
-package com.jonichi.forceahabit.ui.theme
+package com.jonichi.uicommon.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
-import com.jonichi.forceahabit.R
+import com.jonichi.uicommon.R
 
 val provider =
     GoogleFont.Provider(
