@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -14,7 +15,12 @@ import com.jonichi.habit.ui.HabitList
 
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopAppBar("Home")
+        },
+    ) { innerPadding ->
 
         NavHost(
             navController = navController,
@@ -28,6 +34,14 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             }
         }
     }
+}
+
+@Composable
+fun TopAppBar(title: String, modifier: Modifier = Modifier) {
+    Text(
+        text = title,
+        modifier = modifier,
+    )
 }
 
 enum class ForceAHabitScreen(
