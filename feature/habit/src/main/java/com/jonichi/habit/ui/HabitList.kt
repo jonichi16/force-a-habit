@@ -8,10 +8,10 @@ import com.jonichi.uicommon.theme.ForceAHabitTheme
 
 @Composable
 fun HabitList(modifier: Modifier = Modifier) {
-    Text(
-        text = "Home",
-        modifier = modifier,
-    )
+//    Text(
+//        text = "Home",
+//        modifier = modifier,
+//    )
 }
 
 @Preview(showBackground = true)
