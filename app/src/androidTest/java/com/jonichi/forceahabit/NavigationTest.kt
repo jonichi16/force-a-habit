@@ -2,7 +2,9 @@ package com.jonichi.forceahabit
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import org.junit.Assert.assertEquals
@@ -30,5 +32,6 @@ class NavigationTest {
     @Test
     fun fahNavHost_verifyHomeDestination() {
         assertEquals(ForceAHabitScreen.Home.name, navController.currentBackStackEntry?.destination?.route)
+        composeTestRule.onNodeWithText("Home").assertIsDisplayed()
     }
 }

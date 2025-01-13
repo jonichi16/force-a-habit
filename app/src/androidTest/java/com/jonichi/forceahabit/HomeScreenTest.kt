@@ -19,6 +19,5 @@ class HomeScreenTest {
                 HabitList()
             }
         }
-        composeTestRule.onNodeWithText("Home").assertIsDisplayed()
     }
 }
