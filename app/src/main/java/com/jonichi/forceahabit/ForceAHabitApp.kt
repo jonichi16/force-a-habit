@@ -6,15 +6,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jonichi.habit.ui.HabitList
+import com.jonichi.habit.ui.HabitUiState
 
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
+    val state =
+        remember {
+            HabitUiState(
+                habits = listOf(),
+            )
+        }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -30,14 +39,17 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             composable(
                 route = ForceAHabitScreen.Home.name,
             ) {
-                HabitList()
+                HabitList(state)
             }
         }
     }
 }
 
 @Composable
-fun TopAppBar(title: String, modifier: Modifier = Modifier) {
+fun TopAppBar(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = title,
         modifier = modifier,
