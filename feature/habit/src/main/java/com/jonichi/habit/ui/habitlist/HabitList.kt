@@ -11,12 +11,18 @@ import com.jonichi.uicommon.theme.ForceAHabitTheme
 
 @Composable
 fun HabitList(
-    state: HabitUiState,
+    uiState: HabitUiState,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(modifier = modifier) {
-        items(state.habits) { habit ->
-            Text(text = habit.title)
+    when (uiState) {
+        HabitUiState.Error -> TODO()
+        HabitUiState.Loading -> TODO()
+        is HabitUiState.Success -> {
+            LazyColumn(modifier = modifier) {
+                items(uiState.habits) { habit ->
+                    Text(text = habit.title)
+                }
+            }
         }
     }
 }
@@ -27,7 +33,7 @@ fun HabitListPreview() {
     ForceAHabitTheme {
         val state =
             remember {
-                HabitUiState(
+                HabitUiState.Success(
                     habits =
                         listOf(
                             Habit(title = "Habit 1"),

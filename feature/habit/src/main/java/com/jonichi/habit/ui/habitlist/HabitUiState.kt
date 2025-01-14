@@ -1,5 +1,9 @@
 package com.jonichi.habit.ui.habitlist
 
-data class HabitUiState(
-    val habits: List<Habit> = listOf(),
-)
+sealed interface HabitUiState {
+    data object Loading : HabitUiState
+
+    data object Error : HabitUiState
+
+    data class Success(val habits: List<Habit> = listOf()) : HabitUiState
+}
