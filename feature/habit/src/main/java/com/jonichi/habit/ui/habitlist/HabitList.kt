@@ -1,4 +1,4 @@
-package com.jonichi.habit.ui
+package com.jonichi.habit.ui.habitlist
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
