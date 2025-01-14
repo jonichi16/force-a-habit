@@ -19,7 +19,7 @@ import com.jonichi.habit.ui.habitlist.HabitUiState
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
     val state =
         remember {
-            HabitUiState(
+            HabitUiState.Success(
                 habits = listOf(),
             )
         }

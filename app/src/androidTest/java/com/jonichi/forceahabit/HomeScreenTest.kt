@@ -20,7 +20,7 @@ class HomeScreenTest {
         composeTestRule.setContent {
             val state =
                 remember {
-                    HabitUiState(
+                    HabitUiState.Success(
                         habits =
                             listOf(
                                 Habit(title = "Habit 1"),

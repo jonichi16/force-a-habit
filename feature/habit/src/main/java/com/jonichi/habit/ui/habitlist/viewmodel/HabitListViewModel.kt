@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class HabitListViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(HabitUiState())
+    private val _uiState = MutableStateFlow<HabitUiState>(HabitUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -16,7 +16,7 @@ class HabitListViewModel : ViewModel() {
 
     private fun loadHabit() {
         _uiState.value =
-            HabitUiState(
+            HabitUiState.Success(
                 habits =
                     listOf(
                         Habit(title = "Habit 1"),
