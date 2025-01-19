@@ -1,12 +1,18 @@
 package com.jonichi.habit.ui.habitlist
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 
 @Composable
@@ -14,20 +20,28 @@ fun HabitList(
     uiState: HabitUiState,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState) {
-        HabitUiState.Error -> TODO()
-        HabitUiState.Loading -> TODO()
-        is HabitUiState.Success -> {
-            LazyColumn(modifier = modifier) {
-                items(uiState.habits) { habit ->
-                    Text(text = habit.title)
+    Column {
+        HabitTopAppBar(title = "Home")
+        when (uiState) {
+            HabitUiState.Error -> TODO()
+            HabitUiState.Loading -> TODO()
+            is HabitUiState.Success -> {
+                LazyColumn(
+                    modifier =
+                        modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background)
+                ) {
+                    items(uiState.habits) { habit ->
+                        Text(text = habit.title)
+                    }
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun HabitListPreview() {
     ForceAHabitTheme {
