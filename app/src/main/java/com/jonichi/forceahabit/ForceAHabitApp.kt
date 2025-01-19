@@ -5,23 +5,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jonichi.habit.ui.habitlist.HabitList
-import com.jonichi.habit.ui.habitlist.HabitUiState
+import com.jonichi.habit.ui.habitlist.viewmodel.HabitListViewModel
 
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
-    val state =
-        remember {
-            HabitUiState.Success(
-                habits = listOf(),
-            )
-        }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +31,10 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             composable(
                 route = ForceAHabitScreen.Home.name,
             ) {
-                HabitList(state)
+                val habitState: HabitListViewModel = viewModel()
+                val uiState by habitState.uiState.collectAsState()
+
+                HabitList(uiState = uiState)
             }
         }
     }
