@@ -6,10 +6,11 @@ set -euf -o pipefail
 # Display usage information
 usage() {
     echo ""
-    echo "Usage: $0 {lint|test}"
+    echo "Usage: $0 {lint|format|test}"
     echo ""
     echo "Available commands:"
     echo "  lint  - Run code quality checks (Android Lint, Ktlint, Detekt)"
+    echo "  format  - Run ktLintFormat"
     echo "  test  - Run unit test"
     echo ""
     exit 1
@@ -47,6 +48,13 @@ case "$1" in
 
         echo ""
         echo "✅  Code quality checks completed successfully."
+        ;;
+    format)
+        echo "Starting code formatting..."
+        echo ""
+        ./gradlew ktLintFormat
+        echo ""
+        echo "✅  Code formatting completed successfully."
         ;;
     test)
         echo "Starting unit test..."

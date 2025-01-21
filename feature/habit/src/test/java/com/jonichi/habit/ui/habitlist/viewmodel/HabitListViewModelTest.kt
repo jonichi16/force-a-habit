@@ -2,17 +2,54 @@ package com.jonichi.habit.ui.habitlist.viewmodel
 
 import com.jonichi.habit.ui.habitlist.HabitUiState
 import com.jonichi.habit.ui.habitlist.data.getHabitList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class HabitListViewModelTest {
-    private val viewModel = HabitListViewModel()
+    private lateinit var viewModel: HabitListViewModel
+
+    private val testDispatcher = StandardTestDispatcher()
+
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        viewModel = HabitListViewModel()
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
-    fun habitListViewModel_Initialization_ShouldLoadListOfHabit() {
-        val state = viewModel.uiState.value
-        val habits = getHabitList()
+    fun `uiState should be Loading then Success`() =
+        runTest {
+            val job =
+                launch {
+                    viewModel.uiState.collect {}
+                }
 
-        assertEquals(habits, (state as HabitUiState.Success).habits)
-    }
+            val initialState = viewModel.uiState.first()
+
+            assertEquals(HabitUiState.Loading, initialState)
+
+            advanceUntilIdle()
+
+            val successState = viewModel.uiState.first() as HabitUiState.Success
+            assertEquals(getHabitList(), successState.habits)
+
+            job.cancel()
+        }
 }
