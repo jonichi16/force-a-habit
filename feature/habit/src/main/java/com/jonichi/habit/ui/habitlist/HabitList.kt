@@ -31,7 +31,7 @@ fun HabitList(
                     modifier =
                         modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.background)
+                            .background(MaterialTheme.colorScheme.background),
                 ) {
                     items(uiState.habits) { habit ->
                         Text(text = habit.title)

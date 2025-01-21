@@ -16,8 +16,8 @@ import com.jonichi.uicommon.theme.ForceAHabitTheme
 @Composable
 fun HabitTopAppBar(
     title: String,
-    onBackAction: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    onBackAction: (() -> Unit)? = null,
 ) {
     TopAppBar(
         title = { Text(text = title) },
@@ -26,7 +26,7 @@ fun HabitTopAppBar(
                 IconButton(onClick = onBackAction) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = "back button"
+                        contentDescription = "back button",
                     )
                 }
             }
