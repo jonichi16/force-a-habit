@@ -18,7 +18,6 @@ import com.jonichi.habit.ui.habitlist.viewmodel.HabitListViewModel
 
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
