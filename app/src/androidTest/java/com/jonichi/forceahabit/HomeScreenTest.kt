@@ -4,7 +4,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.jonichi.habit.ui.habitlist.Habit
+import com.jonichi.habit.domain.Habit
 import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitUiState
 import com.jonichi.uicommon.theme.ForceAHabitTheme
