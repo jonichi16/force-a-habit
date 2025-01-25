@@ -1,6 +1,7 @@
 package com.jonichi.habit.ui.habitlist.viewmodel
 
-import com.jonichi.habit.ui.habitlist.HabitUiState
+import com.jonichi.habit.ui.habitlist.HabitListUiState
+import com.jonichi.habit.ui.habitlist.HabitListViewModel
 import com.jonichi.habit.ui.habitlist.data.getHabitList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,11 +44,11 @@ class HabitListViewModelTest {
 
             val initialState = viewModel.uiState.first()
 
-            assertEquals(HabitUiState.Loading, initialState)
+            assertEquals(HabitListUiState.Loading, initialState)
 
             advanceUntilIdle()
 
-            val successState = viewModel.uiState.first() as HabitUiState.Success
+            val successState = viewModel.uiState.first() as HabitListUiState.Success
             assertEquals(getHabitList(), successState.habits)
 
             job.cancel()

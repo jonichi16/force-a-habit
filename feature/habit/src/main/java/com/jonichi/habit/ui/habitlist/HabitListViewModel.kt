@@ -1,9 +1,8 @@
-package com.jonichi.habit.ui.habitlist.viewmodel
+package com.jonichi.habit.ui.habitlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jonichi.habit.domain.Habit
-import com.jonichi.habit.ui.habitlist.HabitUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,20 +16,20 @@ class HabitListViewModel : ViewModel() {
         private const val SHARING_STARTED_TIMEOUT = 5000L
     }
 
-    private val _uiState = MutableStateFlow<HabitUiState>(HabitUiState.Loading)
+    private val _uiState = MutableStateFlow<HabitListUiState>(HabitListUiState.Loading)
     val uiState =
         _uiState.onStart { loadHabits() }
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(SHARING_STARTED_TIMEOUT),
-                HabitUiState.Loading,
+                HabitListUiState.Loading,
             )
 
     private fun loadHabits() {
         viewModelScope.launch {
             delay(DELAY_MILLISECONDS) // Simulate network or database delay
             _uiState.value =
-                HabitUiState.Success(
+                HabitListUiState.Success(
                     habits =
                         listOf(
                             Habit(title = "Habit 1"),
