@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jonichi.habit.ui.habitlist.HabitList
-import com.jonichi.habit.ui.habitlist.viewmodel.HabitListViewModel
+import com.jonichi.habit.ui.habitlist.HabitListViewModel
 
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
