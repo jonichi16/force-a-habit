@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.jonichi.habit.domain.Habit
 import com.jonichi.habit.ui.habitlist.HabitList
-import com.jonichi.habit.ui.habitlist.HabitUiState
+import com.jonichi.habit.ui.habitlist.HabitListUiState
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +20,7 @@ class HomeScreenTest {
         composeTestRule.setContent {
             val state =
                 remember {
-                    HabitUiState.Success(
+                    HabitListUiState.Success(
                         habits =
                             listOf(
                                 Habit(title = "Habit 1"),
