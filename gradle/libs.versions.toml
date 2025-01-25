@@ -16,6 +16,9 @@ navigationCompose = "2.8.5"
 appcompat = "1.7.0"
 material = "1.12.0"
 coroutineTest = "1.10.1"
+ksp = "2.1.0-1.0.29"
+hiltVersion = "2.51.1"
+hiltNavigationCompose = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +41,10 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutineTest" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltVersion" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltNavigationCompose" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -46,4 +53,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 jlleitschuhKtlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint"}
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
 android-library = { id = "com.android.library", version.ref = "agp" }
+devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hiltDagger = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 
