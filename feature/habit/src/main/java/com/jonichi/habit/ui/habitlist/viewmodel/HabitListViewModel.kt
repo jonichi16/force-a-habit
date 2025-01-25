@@ -2,7 +2,7 @@ package com.jonichi.habit.ui.habitlist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jonichi.habit.ui.habitlist.Habit
+import com.jonichi.habit.domain.Habit
 import com.jonichi.habit.ui.habitlist.HabitUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

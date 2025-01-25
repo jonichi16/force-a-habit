@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.jonichi.habit.domain.Habit
 import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 
