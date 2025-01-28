@@ -1,5 +1,6 @@
 package com.jonichi.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalTime
@@ -10,5 +11,6 @@ data class HabitEntity(
     val id: Int,
     val title: String,
     val schedule: LocalTime,
+    @ColumnInfo(name = "is_strict")
     val isStrict: Boolean,
 )
