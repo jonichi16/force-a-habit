@@ -5,7 +5,7 @@ import com.jonichi.habit.data.mapper.toDomain
 import com.jonichi.habit.data.mapper.toEntity
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
-import jakarta.inject.Inject
+import javax.inject.Inject
 
 class HabitRepositoryImpl
     @Inject
