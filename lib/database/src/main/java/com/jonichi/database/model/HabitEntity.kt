@@ -8,11 +8,11 @@ import java.time.LocalTime
 @Entity(tableName = "habit")
 data class HabitEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val title: String,
     val schedule: LocalTime,
     @ColumnInfo(name = "is_strict")
-    val isStrict: Boolean,
+    val isStrict: Boolean = false,
     @ColumnInfo(name = "created_at")
     val createdAt: Long = System.currentTimeMillis(),
     @ColumnInfo(name = "updated_at")
