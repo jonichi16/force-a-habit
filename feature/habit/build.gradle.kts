@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jlleitschuhKtlint)
     alias(libs.plugins.detekt)
     alias(libs.plugins.devtoolsKsp)
+    alias(libs.plugins.hiltDagger)
 }
 
 android {
