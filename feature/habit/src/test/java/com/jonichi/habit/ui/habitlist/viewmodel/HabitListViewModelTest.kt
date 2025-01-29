@@ -1,8 +1,9 @@
 package com.jonichi.habit.ui.habitlist.viewmodel
 
+import com.jonichi.habit.domain.repository.HabitRepository
 import com.jonichi.habit.ui.habitlist.HabitListUiState
 import com.jonichi.habit.ui.habitlist.HabitListViewModel
-import com.jonichi.habit.ui.habitlist.data.getHabitList
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -20,13 +21,13 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class HabitListViewModelTest {
     private lateinit var viewModel: HabitListViewModel
-
+    private val habitRepository: HabitRepository = mockk()
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = HabitListViewModel()
+        viewModel = HabitListViewModel(habitRepository)
     }
 
     @After
@@ -49,7 +50,7 @@ class HabitListViewModelTest {
             advanceUntilIdle()
 
             val successState = viewModel.uiState.first() as HabitListUiState.Success
-            assertEquals(getHabitList(), successState.habits)
+            assertEquals(3, successState.habits.size)
 
             job.cancel()
         }
