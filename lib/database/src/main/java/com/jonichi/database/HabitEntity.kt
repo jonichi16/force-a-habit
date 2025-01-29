@@ -13,4 +13,8 @@ data class HabitEntity(
     val schedule: LocalTime,
     @ColumnInfo(name = "is_strict")
     val isStrict: Boolean,
+    @ColumnInfo(name = "created_at")
+    val createdAt: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "updated_at")
+    val updatedAt: Long = System.currentTimeMillis(),
 )
