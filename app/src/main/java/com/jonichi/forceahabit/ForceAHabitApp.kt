@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,7 +30,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             composable(
                 route = ForceAHabitScreen.Home.name,
             ) {
-                val habitState: HabitListViewModel = viewModel()
+                val habitState: HabitListViewModel = hiltViewModel()
                 val uiState by habitState.uiState.collectAsState()
 
                 HabitList(uiState = uiState)
