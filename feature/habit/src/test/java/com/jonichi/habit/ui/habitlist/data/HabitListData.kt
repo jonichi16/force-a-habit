@@ -1,6 +1,6 @@
 package com.jonichi.habit.ui.habitlist.data
 
-import com.jonichi.habit.domain.Habit
+import com.jonichi.habit.domain.model.Habit
 
 fun getHabitList(): List<Habit> {
     return listOf(

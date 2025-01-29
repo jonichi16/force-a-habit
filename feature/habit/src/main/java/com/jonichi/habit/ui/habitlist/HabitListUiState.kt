@@ -1,6 +1,6 @@
 package com.jonichi.habit.ui.habitlist
 
-import com.jonichi.habit.domain.Habit
+import com.jonichi.habit.domain.model.Habit
 
 sealed interface HabitListUiState {
     data object Loading : HabitListUiState
