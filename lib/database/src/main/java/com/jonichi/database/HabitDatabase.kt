@@ -8,4 +8,5 @@ import androidx.room.RoomDatabase
     version = 1,
 )
 abstract class HabitDatabase : RoomDatabase() {
+    abstract fun habitDao(): HabitDao
 }
