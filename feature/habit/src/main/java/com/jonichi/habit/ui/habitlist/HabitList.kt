@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
+import java.time.LocalTime
 
 @Composable
 fun HabitList(
@@ -52,8 +53,24 @@ fun HabitListPreview() {
                 HabitListUiState.Success(
                     habits =
                         listOf(
-                            Habit(title = "Habit 1"),
-                            Habit(title = "Habit 2"),
+                            Habit(
+                                id = 1,
+                                title = "Habit 1",
+                                schedule = LocalTime.of(12, 0),
+                                isStrict = false,
+                            ),
+                            Habit(
+                                id = 2,
+                                title = "Habit 2",
+                                schedule = LocalTime.of(12, 0),
+                                isStrict = false,
+                            ),
+                            Habit(
+                                id = 3,
+                                title = "Habit 3",
+                                schedule = LocalTime.of(12, 0),
+                                isStrict = false,
+                            ),
                         ),
                 )
             }
