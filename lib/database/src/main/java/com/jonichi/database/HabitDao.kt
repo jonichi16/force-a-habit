@@ -3,6 +3,7 @@ package com.jonichi.database
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import com.jonichi.database.model.HabitEntity
 
 @Dao
 interface HabitDao {

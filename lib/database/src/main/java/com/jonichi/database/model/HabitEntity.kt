@@ -1,4 +1,4 @@
-package com.jonichi.database
+package com.jonichi.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
