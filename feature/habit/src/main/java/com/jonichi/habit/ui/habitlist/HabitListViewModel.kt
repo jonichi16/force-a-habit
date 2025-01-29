@@ -2,7 +2,7 @@ package com.jonichi.habit.ui.habitlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jonichi.habit.domain.Habit
+import com.jonichi.habit.domain.model.Habit
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
