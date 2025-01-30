@@ -6,8 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jlleitschuhKtlint)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.devtoolsKsp)
     alias(libs.plugins.hiltDagger)
+    alias(libs.plugins.devtoolsKsp)
 }
 
 android {
@@ -21,7 +21,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.jonichi.forceahabit.CustomTestRunner"
     }
 
     buildTypes {
@@ -82,12 +82,12 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.hilt.android.testing)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Dagger-Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    ksp(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 }
