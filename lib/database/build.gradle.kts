@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.devtoolsKsp)
     alias(libs.plugins.jlleitschuhKtlint)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.hiltDagger)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -73,6 +73,5 @@ dependencies {
     // Dagger-Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    ksp(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 }
