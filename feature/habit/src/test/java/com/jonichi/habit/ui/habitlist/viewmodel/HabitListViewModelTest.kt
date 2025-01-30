@@ -3,6 +3,8 @@ package com.jonichi.habit.ui.habitlist.viewmodel
 import com.jonichi.habit.domain.repository.HabitRepository
 import com.jonichi.habit.ui.habitlist.HabitListUiState
 import com.jonichi.habit.ui.habitlist.HabitListViewModel
+import com.jonichi.habit.ui.habitlist.data.getHabitList
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,6 +29,9 @@ class HabitListViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
+
+        coEvery { habitRepository.getAllHabits() } returns getHabitList()
+
         viewModel = HabitListViewModel(habitRepository)
     }
 

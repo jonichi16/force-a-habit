@@ -5,7 +5,6 @@ import org.junit.Test
 import java.time.LocalTime
 
 class ConverterTest {
-
     private val converter = Converter()
 
     @Test

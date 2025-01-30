@@ -10,14 +10,13 @@ import javax.inject.Inject
 class HabitRepositoryImpl
     @Inject
     constructor(
-        private val habitDao: HabitDao
-    ) : HabitRepository
-{
-    override suspend fun upsert(habit: Habit) {
-        habitDao.upsert(habit.toEntity())
-    }
+        private val habitDao: HabitDao,
+    ) : HabitRepository {
+        override suspend fun upsert(habit: Habit) {
+            habitDao.upsert(habit.toEntity())
+        }
 
-    override suspend fun getAllHabits(): List<Habit> {
-        return habitDao.getAllHabits().map { habitEntity -> habitEntity.toDomain() }
+        override suspend fun getAllHabits(): List<Habit> {
+            return habitDao.getAllHabits().map { habitEntity -> habitEntity.toDomain() }
+        }
     }
-}
