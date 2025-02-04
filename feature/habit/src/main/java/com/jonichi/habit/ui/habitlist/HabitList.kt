@@ -21,7 +21,12 @@ fun HabitList(
     uiState: HabitListUiState,
     modifier: Modifier = Modifier,
 ) {
-    Column {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+    ) {
         HabitTopAppBar(title = "Home")
         when (uiState) {
             HabitListUiState.Error -> TODO()
@@ -29,14 +34,9 @@ fun HabitList(
                 Text(text = "Loading...")
             }
             is HabitListUiState.Success -> {
-                LazyColumn(
-                    modifier =
-                        modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.background),
-                ) {
+                LazyColumn {
                     items(uiState.habits) { habit ->
-                        Text(text = habit.title)
+                        Text(text = habit.title, color = MaterialTheme.colorScheme.onBackground)
                     }
                 }
             }
