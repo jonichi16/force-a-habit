@@ -5,6 +5,8 @@ import com.jonichi.habit.data.mapper.toDomain
 import com.jonichi.habit.data.mapper.toEntity
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HabitRepositoryImpl
@@ -16,7 +18,11 @@ class HabitRepositoryImpl
             habitDao.upsert(habit.toEntity())
         }
 
-        override suspend fun getAllHabits(): List<Habit> {
-            return habitDao.getAllHabits().map { habitEntity -> habitEntity.toDomain() }
+        override suspend fun getAllHabits(): Flow<List<Habit>> {
+            return habitDao.getAllHabits().map { habitEntities ->
+                habitEntities.map { habitEntity ->
+                    habitEntity.toDomain()
+                }
+            }
         }
     }

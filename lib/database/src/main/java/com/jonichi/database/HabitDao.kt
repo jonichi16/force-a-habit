@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.jonichi.database.model.HabitEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitDao {
@@ -11,5 +12,5 @@ interface HabitDao {
     suspend fun upsert(habitEntity: HabitEntity)
 
     @Query("SELECT * FROM habit")
-    suspend fun getAllHabits(): List<HabitEntity>
+    fun getAllHabits(): Flow<List<HabitEntity>>
 }

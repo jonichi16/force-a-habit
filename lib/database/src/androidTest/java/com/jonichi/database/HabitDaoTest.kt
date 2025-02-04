@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jonichi.database.model.HabitEntity
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -13,7 +14,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 import java.time.LocalTime
-import kotlin.jvm.Throws
 
 @RunWith(AndroidJUnit4::class)
 class HabitDaoTest {
@@ -63,7 +63,7 @@ class HabitDaoTest {
     fun habitDao_addHabitToDb() =
         runBlocking {
             addOneHabit()
-            val allHabits = habitDao.getAllHabits()
+            val allHabits = habitDao.getAllHabits().first()
             assertEquals(allHabits.size, 1)
             assertEquals(allHabits[0].title, habit1.title)
             assertEquals(allHabits[0].schedule, habit1.schedule)
@@ -74,8 +74,7 @@ class HabitDaoTest {
     fun habitDao_retrieveAllHabits() =
         runBlocking {
             addTwoHabits()
-            val allHabits = habitDao.getAllHabits()
+            val allHabits = habitDao.getAllHabits().first()
             assertEquals(allHabits.size, 2)
         }
-
 }

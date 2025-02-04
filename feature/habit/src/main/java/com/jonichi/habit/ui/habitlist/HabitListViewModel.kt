@@ -6,6 +6,7 @@ import com.jonichi.habit.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ class HabitListViewModel
             viewModelScope.launch {
                 _uiState.value =
                     HabitListUiState.Success(
-                        habits = habitRepository.getAllHabits(),
+                        habits = habitRepository.getAllHabits().first(),
                     )
             }
         }
