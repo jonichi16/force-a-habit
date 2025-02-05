@@ -51,7 +51,7 @@ class HomeScreenTest {
                 }
 
             ForceAHabitTheme {
-                HabitList(uiState = state)
+                HabitList(uiState = state, onNavigateToHabitForm = {})
             }
         }
         composeTestRule.onNodeWithText("Habit 1").assertIsDisplayed()
