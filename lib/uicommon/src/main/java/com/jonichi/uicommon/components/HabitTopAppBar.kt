@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.jonichi.common.constant.TAG_BACK_ARROW
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +25,7 @@ fun HabitTopAppBar(
         title = { Text(text = title) },
         navigationIcon = {
             if (onBackAction != null) {
-                IconButton(onClick = onBackAction) {
+                IconButton(onClick = onBackAction, modifier = Modifier.testTag(TAG_BACK_ARROW)) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                         contentDescription = "back button",

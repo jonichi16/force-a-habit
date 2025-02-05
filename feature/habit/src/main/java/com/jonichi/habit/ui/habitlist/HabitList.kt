@@ -32,6 +32,7 @@ import java.time.LocalTime
 @Composable
 fun HabitList(
     uiState: HabitListUiState,
+    onNavigateToHabitForm: (Int?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -58,7 +59,10 @@ fun HabitList(
                         }
                     }
                     FloatingActionButton(
-                        onClick = {},
+                        onClick = {
+                            onNavigateToHabitForm(0)
+                            println("click")
+                                  },
                         modifier =
                             Modifier
                                 .align(Alignment.BottomEnd)
@@ -97,6 +101,6 @@ fun HabitListPreview() {
                         ),
                 )
             }
-        HabitList(state)
+        HabitList(uiState = state, onNavigateToHabitForm = {})
     }
 }
