@@ -65,6 +65,7 @@ android {
 
 dependencies {
     implementation(project(":lib:uicommon"))
+    implementation(project(":lib:common"))
     implementation(project(":feature:habit"))
 
     implementation(libs.androidx.core.ktx)
