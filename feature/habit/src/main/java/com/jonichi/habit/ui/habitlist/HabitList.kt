@@ -20,8 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.jonichi.common.constant.TAG_ADD_HABIT
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
@@ -61,10 +63,11 @@ fun HabitList(
                             Modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(16.dp)
+                                .testTag(TAG_ADD_HABIT),
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Add,
-                            contentDescription = "add habit"
+                            contentDescription = "add habit",
                         )
                     }
                 }
@@ -74,7 +77,7 @@ fun HabitList(
 }
 
 object Constant {
-    const val HOUR = 14
+    const val HOUR = 12
     const val MINUTE = 0
 }
 
