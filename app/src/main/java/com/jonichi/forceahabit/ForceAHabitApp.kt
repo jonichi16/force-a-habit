@@ -1,6 +1,5 @@
 package com.jonichi.forceahabit
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -10,9 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.jonichi.habit.ui.habitform.HabitForm
 import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitListViewModel
 
@@ -24,23 +26,36 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
 
         NavHost(
             navController = navController,
-            startDestination = ForceAHabitScreen.Home.name,
+            startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(
-                route = ForceAHabitScreen.Home.name,
+                route = Screen.Home.route,
             ) {
                 val habitState: HabitListViewModel = hiltViewModel()
                 val uiState by habitState.uiState.collectAsState()
 
-                HabitList(uiState = uiState)
+                HabitList(
+                    uiState = uiState,
+                    onNavigateToHabitForm =
+                        { habitId ->
+                            navController.navigate("habitForm/$habitId")
+                        },
+                )
+            }
+            composable(
+                route = Screen.HabitForm.route,
+                arguments = listOf(navArgument("habitId") { type = NavType.IntType }),
+            ) {
+                HabitForm(
+                    onBackAction = { navController.popBackStack() }
+                )
             }
         }
     }
 }
 
-enum class ForceAHabitScreen(
-    @StringRes val title: Int,
-) {
-    Home(title = R.string.app_name),
+sealed class Screen(val route: String) {
+    data object Home: Screen(route = "home")
+    data object HabitForm: Screen(route = "habitForm/{habitId}")
 }

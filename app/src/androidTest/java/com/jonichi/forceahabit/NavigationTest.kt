@@ -1,8 +1,13 @@
 package com.jonichi.forceahabit
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import com.jonichi.common.constant.TAG_ADD_HABIT
+import com.jonichi.common.constant.TAG_BACK_ARROW
 import com.jonichi.habit.di.RepositoryModule
 import com.jonichi.habit.domain.repository.HabitRepository
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -34,5 +39,12 @@ class NavigationTest {
     fun fahNavHost_verifyHomeDestination() {
         composeTestRule.onNodeWithText("Home").assertIsDisplayed()
         composeTestRule.onNodeWithText("Habit 1").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_BACK_ARROW).assertIsNotDisplayed()
+    }
+
+    @Test
+    fun fahNavHost_verifyHabitFormDestination() {
+        composeTestRule.onNodeWithTag(TAG_ADD_HABIT).performClick()
+        composeTestRule.onNodeWithTag(TAG_BACK_ARROW).assertIsDisplayed()
     }
 }
