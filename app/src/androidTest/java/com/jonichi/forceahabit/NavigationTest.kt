@@ -47,4 +47,11 @@ class NavigationTest {
         composeTestRule.onNodeWithTag(TAG_ADD_HABIT).performClick()
         composeTestRule.onNodeWithTag(TAG_BACK_ARROW).assertIsDisplayed()
     }
+
+    @Test
+    fun fahNavHost_verifyHabitFormToNavigateBack() {
+        composeTestRule.onNodeWithTag(TAG_ADD_HABIT).performClick()
+        composeTestRule.onNodeWithTag(TAG_BACK_ARROW).performClick()
+        composeTestRule.onNodeWithText("Home").assertIsDisplayed()
+    }
 }
