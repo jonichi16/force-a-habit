@@ -1,4 +1,4 @@
-package com.jonichi.forceahabit
+package com.jonichi.habit.ui.habitlist
 
 import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertCountEquals
@@ -9,8 +9,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
 import com.jonichi.habit.domain.model.Habit
-import com.jonichi.habit.ui.habitlist.HabitList
-import com.jonichi.habit.ui.habitlist.HabitListUiState
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 import org.junit.Rule
 import org.junit.Test

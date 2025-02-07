@@ -48,7 +48,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
                 arguments = listOf(navArgument("habitId") { type = NavType.IntType }),
             ) {
                 HabitForm(
-                    onBackAction = { navController.popBackStack() }
+                    onBackAction = { navController.popBackStack() },
                 )
             }
         }
@@ -56,6 +56,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
 }
 
 sealed class Screen(val route: String) {
-    data object Home: Screen(route = "home")
-    data object HabitForm: Screen(route = "habitForm/{habitId}")
+    data object Home : Screen(route = "home")
+
+    data object HabitForm : Screen(route = "habitForm/{habitId}")
 }
