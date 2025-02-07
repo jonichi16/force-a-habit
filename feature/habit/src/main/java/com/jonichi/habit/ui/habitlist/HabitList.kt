@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.jonichi.common.constant.TAG_ADD_HABIT
+import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
@@ -67,7 +67,7 @@ fun HabitList(
                             Modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(16.dp)
-                                .testTag(TAG_ADD_HABIT),
+                                .testTag(TAG_ADD_HABIT_NAVIGATION),
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Add,

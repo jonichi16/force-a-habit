@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.jonichi.common.constant.TAG_ADD_HABIT
+import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitListUiState
@@ -60,6 +60,6 @@ class HomeScreenTest {
 
         composeTestRule.onAllNodesWithText("12:00").assertCountEquals(2)
         composeTestRule.onNodeWithText("14:00").assertIsDisplayed()
-        composeTestRule.onNodeWithTag(TAG_ADD_HABIT).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_ADD_HABIT_NAVIGATION).assertIsDisplayed()
     }
 }
