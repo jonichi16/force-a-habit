@@ -9,7 +9,7 @@ import com.jonichi.uicommon.components.HabitTopAppBar
 @Composable
 fun HabitForm(
     onBackAction: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         HabitTopAppBar(title = "Add Habit", onBackAction = onBackAction)

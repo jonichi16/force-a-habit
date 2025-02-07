@@ -62,7 +62,7 @@ fun HabitList(
                         onClick = {
                             onNavigateToHabitForm(0)
                             println("click")
-                                  },
+                        },
                         modifier =
                             Modifier
                                 .align(Alignment.BottomEnd)
