@@ -2,6 +2,7 @@ package com.jonichi.habit.ui.habitlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jonichi.common.constant.SHARING_STARTED_TIMEOUT
 import com.jonichi.habit.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,10 +19,6 @@ class HabitListViewModel
     constructor(
         private val habitRepository: HabitRepository,
     ) : ViewModel() {
-        companion object {
-            private const val SHARING_STARTED_TIMEOUT = 5000L
-        }
-
         private val _uiState = MutableStateFlow<HabitListUiState>(HabitListUiState.Loading)
         val uiState =
             _uiState.onStart { loadHabits() }
