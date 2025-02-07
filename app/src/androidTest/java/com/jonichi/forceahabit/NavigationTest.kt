@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.jonichi.common.constant.TAG_ADD_HABIT
+import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
 import com.jonichi.common.constant.TAG_BACK_ARROW
 import com.jonichi.habit.di.RepositoryModule
 import com.jonichi.habit.domain.repository.HabitRepository
@@ -44,13 +44,13 @@ class NavigationTest {
 
     @Test
     fun fahNavHost_verifyHabitFormDestination() {
-        composeTestRule.onNodeWithTag(TAG_ADD_HABIT).performClick()
+        composeTestRule.onNodeWithTag(TAG_ADD_HABIT_NAVIGATION).performClick()
         composeTestRule.onNodeWithTag(TAG_BACK_ARROW).assertIsDisplayed()
     }
 
     @Test
     fun fahNavHost_verifyHabitFormToNavigateBack() {
-        composeTestRule.onNodeWithTag(TAG_ADD_HABIT).performClick()
+        composeTestRule.onNodeWithTag(TAG_ADD_HABIT_NAVIGATION).performClick()
         composeTestRule.onNodeWithTag(TAG_BACK_ARROW).performClick()
         composeTestRule.onNodeWithText("Home").assertIsDisplayed()
     }
