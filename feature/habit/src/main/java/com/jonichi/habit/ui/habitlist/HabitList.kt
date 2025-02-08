@@ -35,12 +35,7 @@ fun HabitList(
     onNavigateToHabitForm: (Int?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-    ) {
+    Column(modifier = modifier) {
         HabitTopAppBar(title = "Home")
         when (state) {
             HabitListUiState.Error -> TODO()
@@ -61,7 +56,6 @@ fun HabitList(
                     FloatingActionButton(
                         onClick = {
                             onNavigateToHabitForm(0)
-                            println("click")
                         },
                         modifier =
                             Modifier
