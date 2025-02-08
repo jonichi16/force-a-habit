@@ -20,7 +20,7 @@ fun Habit.toEntity(): HabitEntity {
         title = title,
         schedule = schedule,
         isStrict = isStrict,
-        createdAt = createdAt,
-        updatedAt = updatedAt,
+        createdAt = createdAt!!,
+        updatedAt = updatedAt!!,
     )
 }
