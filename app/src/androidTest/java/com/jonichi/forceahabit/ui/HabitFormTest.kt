@@ -1,7 +1,6 @@
 package com.jonichi.forceahabit.ui
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
@@ -20,8 +19,10 @@ import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
 import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
 import com.jonichi.common.constant.TAG_TIME_INPUT
 import com.jonichi.habit.ui.habitform.HabitForm
+import com.jonichi.habit.ui.habitform.HabitFormEvent
 import com.jonichi.habit.ui.habitform.HabitFormUiState
 import com.jonichi.uicommon.theme.ForceAHabitTheme
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.time.LocalTime
@@ -30,25 +31,42 @@ class HabitFormTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun habitForm_shouldDisplayAllFields() {
+    @Before
+    fun setUpHabitForm() {
+        val title = mutableStateOf("")
+        val schedule = mutableStateOf(LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE))
+        val isTimeDialogOpen = mutableStateOf(false)
         composeTestRule.setContent {
-            val state =
-                remember {
-                    HabitFormUiState.Success()
-                }
             ForceAHabitTheme {
                 HabitForm(
-                    state = state,
-                    onUpdateTitle = {},
+                    state =
+                    HabitFormUiState.Success(
+                        title = title.value,
+                        schedule = schedule.value,
+                        isTimeDialogOpen = isTimeDialogOpen.value,
+                    ),
+                    onEvent = { event ->
+                        when (event) {
+                            is HabitFormEvent.UpdateTitle -> {
+                                title.value = event.title
+                            }
+                            is HabitFormEvent.UpdateSchedule -> {
+                                schedule.value = event.schedule
+                            }
+                            HabitFormEvent.ToggleTimeDialog -> {
+                                isTimeDialogOpen.value = !isTimeDialogOpen.value
+                            }
+                            HabitFormEvent.SaveHabit -> {}
+                        }
+                    },
                     onBackAction = {},
-                    onToggleTimeDialog = {},
-                    onUpdateSchedule = {},
-                    onSave = {},
                 )
             }
         }
+    }
 
+    @Test
+    fun habitForm_shouldDisplayAllFields() {
         composeTestRule.onNodeWithText("Title").assertIsDisplayed()
         composeTestRule.onNodeWithText("Time").assertIsDisplayed()
         composeTestRule.onAllNodesWithTag(TAG_FORM_INPUT_FIELD).assertCountEquals(2)
@@ -58,24 +76,6 @@ class HabitFormTest {
 
     @Test
     fun habitForm_shouldBeAbleToOpenTimeDialog() {
-        val isTimeDialogOpen = mutableStateOf(false)
-        composeTestRule.setContent {
-            ForceAHabitTheme {
-                HabitForm(
-                    state = HabitFormUiState.Success(
-                        isTimeDialogOpen = isTimeDialogOpen.value
-                    ),
-                    onUpdateTitle = {},
-                    onUpdateSchedule = {},
-                    onToggleTimeDialog = {
-                        isTimeDialogOpen.value = !isTimeDialogOpen.value
-                    },
-                    onBackAction = {},
-                    onSave = {},
-                )
-            }
-        }
-
         composeTestRule.onNodeWithTag(TAG_TIME_INPUT).assertIsNotDisplayed()
         composeTestRule.onNodeWithText("Time").performClick()
         composeTestRule.onNodeWithTag(TAG_TIME_INPUT).assertIsDisplayed()
@@ -85,32 +85,6 @@ class HabitFormTest {
 
     @Test
     fun habitForm_shouldFillTheFields() {
-        val title = mutableStateOf("")
-        val schedule = mutableStateOf(LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE))
-        val isTimeDialogOpen = mutableStateOf(false)
-        composeTestRule.setContent {
-            ForceAHabitTheme {
-                HabitForm(
-                    state = HabitFormUiState.Success(
-                        title = title.value,
-                        schedule = schedule.value,
-                        isTimeDialogOpen = isTimeDialogOpen.value
-                    ),
-                    onUpdateTitle = { titleInput ->
-                        title.value = titleInput
-                    },
-                    onUpdateSchedule = { scheduleInput ->
-                        schedule.value = scheduleInput
-                    },
-                    onToggleTimeDialog = {
-                        isTimeDialogOpen.value = !isTimeDialogOpen.value
-                    },
-                    onBackAction = {},
-                    onSave = {},
-                )
-            }
-        }
-
         composeTestRule.onNodeWithText("Title").performTextInput("Habit 1")
         composeTestRule.onNodeWithText("Habit 1").assertIsDisplayed()
         composeTestRule.onNodeWithText("Time").performClick()

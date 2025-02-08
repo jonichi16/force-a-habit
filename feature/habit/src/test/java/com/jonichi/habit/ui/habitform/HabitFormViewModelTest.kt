@@ -70,7 +70,7 @@ class HabitFormViewModelTest {
                 }
 
             advanceUntilIdle()
-            viewModel.updateTitle("Habit 1")
+            viewModel.onEvent(HabitFormEvent.UpdateTitle("Habit 1"))
             advanceUntilIdle()
 
             val updatedState = viewModel.uiState.first() as HabitFormUiState.Success
@@ -88,7 +88,7 @@ class HabitFormViewModelTest {
                 }
 
             advanceUntilIdle()
-            viewModel.updateSchedule(LocalTime.of(3, 30))
+            viewModel.onEvent(HabitFormEvent.UpdateSchedule(LocalTime.of(3, 30)))
             advanceUntilIdle()
 
             val updatedState = viewModel.uiState.first() as HabitFormUiState.Success
@@ -106,7 +106,7 @@ class HabitFormViewModelTest {
                 }
 
             advanceUntilIdle()
-            viewModel.toggleTimeDialog()
+            viewModel.onEvent(HabitFormEvent.ToggleTimeDialog)
             advanceUntilIdle()
 
             val updatedState = viewModel.uiState.first() as HabitFormUiState.Success
@@ -124,7 +124,7 @@ class HabitFormViewModelTest {
                 }
 
             advanceUntilIdle()
-            viewModel.saveHabit()
+            viewModel.onEvent(HabitFormEvent.SaveHabit)
             advanceUntilIdle()
 
             coVerify { habitRepository.upsert(any<Habit>()) }

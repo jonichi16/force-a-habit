@@ -32,10 +32,7 @@ import java.time.LocalTime
 @Composable
 fun HabitForm(
     state: HabitFormUiState,
-    onUpdateTitle: (String) -> Unit,
-    onUpdateSchedule: (LocalTime) -> Unit,
-    onToggleTimeDialog: () -> Unit,
-    onSave: () -> Unit,
+    onEvent: (HabitFormEvent) -> Unit,
     onBackAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -51,7 +48,9 @@ fun HabitForm(
                 HabitTextField(
                     label = "Title",
                     value = state.title,
-                    onValueChange = onUpdateTitle,
+                    onValueChange = { title ->
+                        onEvent(HabitFormEvent.UpdateTitle(title))
+                    },
                 )
                 HabitTextField(
                     label = "Time",
@@ -59,30 +58,31 @@ fun HabitForm(
                     readOnly = true,
                     enabled = false,
                     onValueChange = {},
-                    colors = TextFieldDefaults.colors(
-                        disabledIndicatorColor = Color.Gray,
-                        disabledTextColor = LocalContentColor.current,
-                        disabledLabelColor = LocalContentColor.current,
-                    ),
+                    colors =
+                        TextFieldDefaults.colors(
+                            disabledIndicatorColor = Color.Gray,
+                            disabledTextColor = LocalContentColor.current,
+                            disabledLabelColor = LocalContentColor.current,
+                        ),
                     modifier =
                         Modifier
                             .clickable(role = Role.Button) {
-                                onToggleTimeDialog()
-                            }
+                                onEvent(HabitFormEvent.ToggleTimeDialog)
+                            },
                 )
                 Button(onClick = {
-                    onSave()
+                    onEvent(HabitFormEvent.SaveHabit)
                     onBackAction()
                 }) {
                     Text("Save")
                 }
                 if (state.isTimeDialogOpen) {
                     TimePickerDialog(
-                        onToggleTimeDialog = onToggleTimeDialog,
+                        onToggleTimeDialog = { onEvent(HabitFormEvent.ToggleTimeDialog) },
                         confirmButton = { hour, minute ->
-                            onUpdateSchedule(LocalTime.of(hour, minute))
-                            onToggleTimeDialog()
-                                        },
+                            onEvent(HabitFormEvent.UpdateSchedule(LocalTime.of(hour, minute)))
+                            onEvent(HabitFormEvent.ToggleTimeDialog)
+                        },
                     )
                 }
             }
@@ -116,20 +116,22 @@ fun HabitTextField(
 fun TimePickerDialog(
     onToggleTimeDialog: () -> Unit,
     confirmButton: (hour: Int, minute: Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val timePickerState = rememberTimePickerState(
-        initialHour = DEFAULT_HOUR,
-        initialMinute = DEFAULT_MINUTE
-    )
+    val timePickerState =
+        rememberTimePickerState(
+            initialHour = DEFAULT_HOUR,
+            initialMinute = DEFAULT_MINUTE,
+        )
     AlertDialog(
         onDismissRequest = onToggleTimeDialog,
         confirmButton = {
             TextButton(
                 onClick = {
                     confirmButton(timePickerState.hour, timePickerState.minute)
-                          },
-                modifier = Modifier.testTag(TAG_BUTTON_CONFIRM)) {
+                },
+                modifier = Modifier.testTag(TAG_BUTTON_CONFIRM),
+            ) {
                 Text(text = "Confirm")
             }
         },
@@ -142,9 +144,9 @@ fun TimePickerDialog(
         text = {
             TimeInput(
                 state = timePickerState,
-                modifier = modifier.testTag(TAG_TIME_INPUT)
+                modifier = modifier.testTag(TAG_TIME_INPUT),
             )
-        }
+        },
     )
 }
 
@@ -154,11 +156,8 @@ fun HabitFormPreview() {
     ForceAHabitTheme {
         HabitForm(
             state = HabitFormUiState.Success(isTimeDialogOpen = true),
-            onUpdateTitle = {},
+            onEvent = {},
             onBackAction = {},
-            onUpdateSchedule = {},
-            onSave = {},
-            onToggleTimeDialog = {}
         )
     }
 }
