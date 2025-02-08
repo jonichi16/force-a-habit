@@ -55,6 +55,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
                     state = state,
                     onUpdateTitle = habitFormViewModel::updateTitle,
                     onUpdateSchedule = habitFormViewModel::updateSchedule,
+                    onToggleTimeDialog = habitFormViewModel::toggleTimeDialog,
                     onBackAction = { navController.popBackStack() },
                 )
             }
