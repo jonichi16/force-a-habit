@@ -11,7 +11,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TimeInput
-import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +23,7 @@ import com.jonichi.common.constant.DEFAULT_MINUTE
 import com.jonichi.common.constant.TAG_BUTTON_CANCEL
 import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
 import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
-import com.jonichi.common.constant.TAG_TIME_DIALOG
+import com.jonichi.common.constant.TAG_TIME_INPUT
 import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 import java.time.LocalTime
@@ -135,7 +134,7 @@ fun TimePickerDialog(
         text = {
             TimeInput(
                 state = timePickerState,
-                modifier = modifier.testTag(TAG_TIME_DIALOG)
+                modifier = modifier.testTag(TAG_TIME_INPUT)
             )
         }
     )
