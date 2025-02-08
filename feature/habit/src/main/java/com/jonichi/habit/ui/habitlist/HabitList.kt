@@ -31,7 +31,7 @@ import java.time.LocalTime
 
 @Composable
 fun HabitList(
-    uiState: HabitListUiState,
+    state: HabitListUiState,
     onNavigateToHabitForm: (Int?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -42,7 +42,7 @@ fun HabitList(
                 .background(MaterialTheme.colorScheme.background),
     ) {
         HabitTopAppBar(title = "Home")
-        when (uiState) {
+        when (state) {
             HabitListUiState.Error -> TODO()
             HabitListUiState.Loading -> {
                 Text(text = "Loading...")
@@ -50,7 +50,7 @@ fun HabitList(
             is HabitListUiState.Success -> {
                 Box(modifier = Modifier.fillMaxSize()) {
                     LazyColumn {
-                        items(uiState.habits) { habit ->
+                        items(state.habits) { habit ->
                             Row {
                                 Text(text = habit.title, color = MaterialTheme.colorScheme.onBackground)
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -101,6 +101,6 @@ fun HabitListPreview() {
                         ),
                 )
             }
-        HabitList(uiState = state, onNavigateToHabitForm = {})
+        HabitList(state = state, onNavigateToHabitForm = {})
     }
 }
