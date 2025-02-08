@@ -40,11 +40,11 @@ class HabitFormTest {
             ForceAHabitTheme {
                 HabitForm(
                     state =
-                    HabitFormUiState.Success(
-                        title = title.value,
-                        schedule = schedule.value,
-                        isTimeDialogOpen = isTimeDialogOpen.value,
-                    ),
+                        HabitFormUiState.Success(
+                            title = title.value,
+                            schedule = schedule.value,
+                            isTimeDialogOpen = isTimeDialogOpen.value,
+                        ),
                     onEvent = { event ->
                         when (event) {
                             is HabitFormEvent.UpdateTitle -> {
