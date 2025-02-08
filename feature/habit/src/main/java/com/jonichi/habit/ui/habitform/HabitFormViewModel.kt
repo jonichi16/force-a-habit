@@ -29,31 +29,41 @@ class HabitFormViewModel
                     HabitFormUiState.Loading,
                 )
 
-        fun updateTitle(title: String) {
+        fun onEvent(event: HabitFormEvent) {
+            when (event) {
+                is HabitFormEvent.UpdateTitle -> updateTitle(event.title)
+                is HabitFormEvent.UpdateSchedule -> updateSchedule(event.schedule)
+                HabitFormEvent.ToggleTimeDialog -> toggleTimeDialog()
+                HabitFormEvent.SaveHabit -> saveHabit()
+            }
+        }
+
+        private fun updateTitle(title: String) {
             updateSuccessState { state ->
                 state.copy(title = title)
             }
         }
 
-        fun updateSchedule(schedule: LocalTime) {
+        private fun updateSchedule(schedule: LocalTime) {
             updateSuccessState { state ->
                 state.copy(schedule = schedule)
             }
         }
 
-        fun toggleTimeDialog() {
+        private fun toggleTimeDialog() {
             updateSuccessState { state ->
                 state.copy(isTimeDialogOpen = !state.isTimeDialogOpen)
             }
         }
 
-        fun saveHabit() {
+        private fun saveHabit() {
             viewModelScope.launch {
                 updateSuccessState { state ->
-                    val habitToSave = Habit(
-                        title = state.title,
-                        schedule = state.schedule
-                    )
+                    val habitToSave =
+                        Habit(
+                            title = state.title,
+                            schedule = state.schedule,
+                        )
                     habitRepository.upsert(habitToSave)
                     HabitFormUiState.Success()
                 }
@@ -73,5 +83,4 @@ class HabitFormViewModel
                 _uiState.value = update(currentState)
             }
         }
-
-    }
+}
