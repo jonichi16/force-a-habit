@@ -3,6 +3,7 @@ package com.jonichi.forceahabit.ui
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -50,6 +51,8 @@ class HabitFormTest {
         composeTestRule.onNodeWithText("Title").assertIsDisplayed()
         composeTestRule.onNodeWithText("Time").assertIsDisplayed()
         composeTestRule.onAllNodesWithTag(TAG_FORM_INPUT_FIELD).assertCountEquals(2)
+        composeTestRule.onNodeWithText("Save").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Save").assertHasClickAction()
     }
 
     @Test
