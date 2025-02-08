@@ -35,6 +35,7 @@ fun HabitForm(
     onUpdateTitle: (String) -> Unit,
     onUpdateSchedule: (LocalTime) -> Unit,
     onToggleTimeDialog: () -> Unit,
+    onSave: () -> Unit,
     onBackAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -69,7 +70,10 @@ fun HabitForm(
                                 onToggleTimeDialog()
                             }
                 )
-                Button(onClick = {}) {
+                Button(onClick = {
+                    onSave()
+                    onBackAction()
+                }) {
                     Text("Save")
                 }
                 if (state.isTimeDialogOpen) {
@@ -153,6 +157,7 @@ fun HabitFormPreview() {
             onUpdateTitle = {},
             onBackAction = {},
             onUpdateSchedule = {},
+            onSave = {},
             onToggleTimeDialog = {}
         )
     }

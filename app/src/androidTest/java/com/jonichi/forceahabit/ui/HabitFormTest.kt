@@ -43,7 +43,8 @@ class HabitFormTest {
                     onUpdateTitle = {},
                     onBackAction = {},
                     onToggleTimeDialog = {},
-                    onUpdateSchedule = {}
+                    onUpdateSchedule = {},
+                    onSave = {},
                 )
             }
         }
@@ -69,7 +70,8 @@ class HabitFormTest {
                     onToggleTimeDialog = {
                         isTimeDialogOpen.value = !isTimeDialogOpen.value
                     },
-                    onBackAction = {}
+                    onBackAction = {},
+                    onSave = {},
                 )
             }
         }
@@ -103,7 +105,8 @@ class HabitFormTest {
                     onToggleTimeDialog = {
                         isTimeDialogOpen.value = !isTimeDialogOpen.value
                     },
-                    onBackAction = {}
+                    onBackAction = {},
+                    onSave = {},
                 )
             }
         }
