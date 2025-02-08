@@ -87,4 +87,22 @@ class HabitFormViewModelTest {
 
             job.cancel()
         }
+
+    @Test
+    fun `viewModel should be able to open time dialog`() =
+        runTest {
+            val job =
+                launch {
+                    viewModel.uiState.collect {}
+                }
+
+            advanceUntilIdle()
+            viewModel.toggleTimeDialog()
+            advanceUntilIdle()
+
+            val updatedState = viewModel.uiState.first() as HabitFormUiState.Success
+            assertEquals(true, updatedState.isTimeDialogOpen)
+
+            job.cancel()
+        }
 }
