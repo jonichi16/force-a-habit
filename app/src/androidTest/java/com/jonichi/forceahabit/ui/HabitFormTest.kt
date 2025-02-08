@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
@@ -12,6 +13,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.jonichi.common.constant.DEFAULT_HOUR
 import com.jonichi.common.constant.DEFAULT_MINUTE
+import com.jonichi.common.constant.TAG_BUTTON_CANCEL
+import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
 import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
 import com.jonichi.common.constant.TAG_TIME_DIALOG
 import com.jonichi.habit.ui.habitform.HabitForm
@@ -68,9 +71,12 @@ class HabitFormTest {
             }
         }
 
+        composeTestRule.onNodeWithTag(TAG_TIME_DIALOG).assertIsNotDisplayed()
         composeTestRule.onNodeWithText("Time").performClick()
         assert(isTimeDialogOpen.value)
         composeTestRule.onNodeWithTag(TAG_TIME_DIALOG).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_BUTTON_CONFIRM).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_BUTTON_CANCEL).assertIsDisplayed()
     }
 
     @Test
