@@ -1,5 +1,6 @@
 package com.jonichi.forceahabit
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -7,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -22,13 +24,14 @@ import com.jonichi.habit.ui.habitlist.HabitListViewModel
 @Composable
 fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
 
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
         ) {
             composable(
                 route = Screen.Home.route,

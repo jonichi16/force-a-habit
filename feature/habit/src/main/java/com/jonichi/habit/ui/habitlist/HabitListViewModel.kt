@@ -29,6 +29,7 @@ class HabitListViewModel
                 )
 
         private fun loadHabits() {
+            _uiState.value = HabitListUiState.Loading
             viewModelScope.launch {
                 _uiState.value =
                     HabitListUiState.Success(
