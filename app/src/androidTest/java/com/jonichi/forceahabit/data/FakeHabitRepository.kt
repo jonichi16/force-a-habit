@@ -11,7 +11,7 @@ class FakeHabitRepository
     @Inject
     constructor() : HabitRepository {
         override suspend fun upsert(habit: Habit) {
-            TODO("Not yet implemented")
+            return
         }
 
         override suspend fun getAllHabits(): Flow<List<Habit>> {
