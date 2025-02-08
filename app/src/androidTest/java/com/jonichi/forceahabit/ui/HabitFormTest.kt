@@ -11,16 +11,16 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import com.jonichi.common.constant.DEFAULT_HOUR
 import com.jonichi.common.constant.DEFAULT_MINUTE
 import com.jonichi.common.constant.TAG_BUTTON_CANCEL
 import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
 import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
-import com.jonichi.common.constant.TAG_TIME_DIALOG
+import com.jonichi.common.constant.TAG_TIME_INPUT
 import com.jonichi.habit.ui.habitform.HabitForm
 import com.jonichi.habit.ui.habitform.HabitFormUiState
 import com.jonichi.uicommon.theme.ForceAHabitTheme
-import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import java.time.LocalTime
@@ -71,35 +71,46 @@ class HabitFormTest {
             }
         }
 
-        composeTestRule.onNodeWithTag(TAG_TIME_DIALOG).assertIsNotDisplayed()
+        composeTestRule.onNodeWithTag(TAG_TIME_INPUT).assertIsNotDisplayed()
         composeTestRule.onNodeWithText("Time").performClick()
-        assert(isTimeDialogOpen.value)
-        composeTestRule.onNodeWithTag(TAG_TIME_DIALOG).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_TIME_INPUT).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TAG_BUTTON_CONFIRM).assertIsDisplayed()
         composeTestRule.onNodeWithTag(TAG_BUTTON_CANCEL).assertIsDisplayed()
     }
 
     @Test
     fun habitForm_shouldFillTheFields() {
-        var title = ""
-        var schedule = LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE)
+        val title = mutableStateOf("")
+        val schedule = mutableStateOf(LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE))
+        val isTimeDialogOpen = mutableStateOf(false)
         composeTestRule.setContent {
             ForceAHabitTheme {
                 HabitForm(
-                    state = HabitFormUiState.Success(),
+                    state = HabitFormUiState.Success(
+                        title = title.value,
+                        schedule = schedule.value,
+                        isTimeDialogOpen = isTimeDialogOpen.value
+                    ),
                     onUpdateTitle = { titleInput ->
-                        title = titleInput
+                        title.value = titleInput
                     },
                     onUpdateSchedule = { scheduleInput ->
-                        schedule = scheduleInput
+                        schedule.value = scheduleInput
                     },
-                    onToggleTimeDialog = {},
+                    onToggleTimeDialog = {
+                        isTimeDialogOpen.value = !isTimeDialogOpen.value
+                    },
                     onBackAction = {}
                 )
             }
         }
 
         composeTestRule.onNodeWithText("Title").performTextInput("Habit 1")
-        assertEquals("Habit 1", title)
+        composeTestRule.onNodeWithText("Habit 1").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Time").performClick()
+        composeTestRule.onNodeWithText("08").performTextReplacement("04")
+        composeTestRule.onNodeWithText("00").performTextReplacement("40")
+        composeTestRule.onNodeWithTag(TAG_BUTTON_CONFIRM).performClick()
+        composeTestRule.onNodeWithText("04:40").assertIsDisplayed()
     }
 }
