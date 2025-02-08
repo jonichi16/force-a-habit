@@ -44,7 +44,6 @@ fun HabitForm(
                 Text(text = "Loading...")
             }
             is HabitFormUiState.Success -> {
-                println("Hello")
                 HabitTextField(
                     label = "Title",
                     value = state.title,
@@ -155,7 +154,7 @@ fun TimePickerDialog(
 fun HabitFormPreview() {
     ForceAHabitTheme {
         HabitForm(
-            state = HabitFormUiState.Success(isTimeDialogOpen = true),
+            state = HabitFormUiState.Success(),
             onEvent = {},
             onBackAction = {},
         )
