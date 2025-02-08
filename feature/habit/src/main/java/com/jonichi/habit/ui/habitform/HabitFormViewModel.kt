@@ -35,6 +35,12 @@ class HabitFormViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun toggleTimeDialog() {
+        updateSuccessState { state ->
+            state.copy(isTimeDialogOpen = !state.isTimeDialogOpen)
+        }
+    }
+
     private fun loadHabit() {
         viewModelScope.launch {
             _uiState.value =
