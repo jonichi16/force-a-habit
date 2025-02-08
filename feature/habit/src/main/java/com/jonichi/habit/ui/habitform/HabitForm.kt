@@ -17,27 +17,38 @@ import java.time.LocalTime
 
 @Composable
 fun HabitForm(
+    state: HabitFormUiState,
+    onUpdateTitle: (String) -> Unit,
+    onUpdateSchedule: (LocalTime) -> Unit,
     onBackAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         HabitTopAppBar(title = "Add Habit", onBackAction = onBackAction)
-        HabitTextField(
-            label = "Title",
-            value = "",
-            onValueChange = {},
-        )
-        HabitTextField(
-            label = "Time",
-            value = LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE).toString(),
-            readOnly = true,
-            onValueChange = {},
-            modifier =
-                Modifier
-                    .clickable {
-                        println("")
-                    },
-        )
+        when (state) {
+            HabitFormUiState.Error -> TODO()
+            HabitFormUiState.Loading -> {
+                Text(text = "Loading...")
+            }
+            is HabitFormUiState.Success -> {
+                HabitTextField(
+                    label = "Title",
+                    value = state.title,
+                    onValueChange = onUpdateTitle,
+                )
+                HabitTextField(
+                    label = "Time",
+                    value = state.schedule.toString(),
+                    readOnly = true,
+                    onValueChange = {},
+                    modifier =
+                    Modifier
+                        .clickable {
+                            println("")
+                        },
+                )
+            }
+        }
     }
 }
 
@@ -62,6 +73,11 @@ fun HabitTextField(
 @Composable
 fun HabitFormPreview() {
     ForceAHabitTheme {
-        HabitForm(onBackAction = {})
+        HabitForm(
+            state = HabitFormUiState.Success(),
+            onUpdateTitle = {},
+            onBackAction = {},
+            onUpdateSchedule = {}
+        )
     }
 }

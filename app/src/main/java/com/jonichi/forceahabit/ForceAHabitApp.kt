@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jonichi.habit.ui.habitform.HabitForm
+import com.jonichi.habit.ui.habitform.HabitFormViewModel
 import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitListViewModel
 
@@ -36,7 +37,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
                 val uiState by habitState.uiState.collectAsState()
 
                 HabitList(
-                    uiState = uiState,
+                    state = uiState,
                     onNavigateToHabitForm =
                         { habitId ->
                             navController.navigate("habitForm/$habitId")
@@ -47,7 +48,13 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
                 route = Screen.HabitForm.route,
                 arguments = listOf(navArgument("habitId") { type = NavType.IntType }),
             ) {
+                val habitFormViewModel: HabitFormViewModel = hiltViewModel()
+                val state by habitFormViewModel.uiState.collectAsState()
+
                 HabitForm(
+                    state = state,
+                    onUpdateTitle = habitFormViewModel::updateTitle,
+                    onUpdateSchedule = habitFormViewModel::updateSchedule,
                     onBackAction = { navController.popBackStack() },
                 )
             }
