@@ -12,5 +12,6 @@ sealed interface HabitFormUiState {
     data class Success(
         val title: String = "",
         val schedule: LocalTime = LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE),
+        val isTimeDialogOpen: Boolean = false,
     ) : HabitFormUiState
 }
