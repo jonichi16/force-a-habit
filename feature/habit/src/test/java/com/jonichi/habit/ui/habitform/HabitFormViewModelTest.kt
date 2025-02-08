@@ -1,5 +1,10 @@
 package com.jonichi.habit.ui.habitform
 
+import com.jonichi.habit.domain.model.Habit
+import com.jonichi.habit.domain.repository.HabitRepository
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,12 +23,16 @@ import java.time.LocalTime
 @OptIn(ExperimentalCoroutinesApi::class)
 class HabitFormViewModelTest {
     private lateinit var viewModel: HabitFormViewModel
+    private val habitRepository: HabitRepository = mockk()
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = HabitFormViewModel()
+
+        coEvery { habitRepository.upsert(any<Habit>()) } returns Unit
+
+        viewModel = HabitFormViewModel(habitRepository)
     }
 
     @After
@@ -102,6 +111,26 @@ class HabitFormViewModelTest {
 
             val updatedState = viewModel.uiState.first() as HabitFormUiState.Success
             assertEquals(true, updatedState.isTimeDialogOpen)
+
+            job.cancel()
+        }
+
+    @Test
+    fun `viewModel should invoke repository upsert when saving`() =
+        runTest {
+            val job =
+                launch {
+                    viewModel.uiState.collect {}
+                }
+
+            advanceUntilIdle()
+            viewModel.saveHabit()
+            advanceUntilIdle()
+
+            coVerify { habitRepository.upsert(any<Habit>()) }
+
+            val currentState = viewModel.uiState.first()
+            assert(currentState is HabitFormUiState.Success)
 
             job.cancel()
         }

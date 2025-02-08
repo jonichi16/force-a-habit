@@ -7,6 +7,6 @@ data class Habit(
     val title: String,
     val schedule: LocalTime,
     val isStrict: Boolean = false,
-    val createdAt: Long = System.currentTimeMillis(),
-    val updatedAt: Long = System.currentTimeMillis(),
+    val createdAt: Long? = null,
+    val updatedAt: Long? = null,
 )
