@@ -25,7 +25,6 @@ import com.jonichi.common.constant.TAG_BUTTON_CANCEL
 import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
 import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
 import com.jonichi.common.constant.TAG_TIME_INPUT
-import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 import java.time.LocalTime
 
@@ -37,7 +36,6 @@ fun HabitForm(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        HabitTopAppBar(title = "Add Habit", onBackAction = onBackAction)
         when (state) {
             HabitFormUiState.Error -> TODO()
             HabitFormUiState.Loading -> {

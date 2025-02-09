@@ -1,6 +1,5 @@
 package com.jonichi.habit.ui.habitlist
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +24,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
 import com.jonichi.habit.domain.model.Habit
-import com.jonichi.uicommon.components.HabitTopAppBar
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 import java.time.LocalTime
 
@@ -36,7 +34,6 @@ fun HabitList(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        HabitTopAppBar(title = "Home")
         when (state) {
             HabitListUiState.Error -> TODO()
             HabitListUiState.Loading -> {
