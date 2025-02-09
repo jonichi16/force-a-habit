@@ -91,6 +91,6 @@ class HabitFormTest {
         composeTestRule.onNodeWithText("08").performTextReplacement("04")
         composeTestRule.onNodeWithText("00").performTextReplacement("40")
         composeTestRule.onNodeWithTag(TAG_BUTTON_CONFIRM).performClick()
-        composeTestRule.onNodeWithText("04:40").assertIsDisplayed()
+        composeTestRule.onNodeWithText("04:40 AM").assertIsDisplayed()
     }
 }
