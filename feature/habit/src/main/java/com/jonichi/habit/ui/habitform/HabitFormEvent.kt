@@ -7,9 +7,9 @@ sealed interface HabitFormEvent {
 
     data class UpdateSchedule(val schedule: LocalTime) : HabitFormEvent
 
-    data object ToggleTimeDialog : HabitFormEvent
+    data class SaveHabit(val onSuccess: () -> Unit) : HabitFormEvent
 
-    data object SaveHabit : HabitFormEvent
+    data object ToggleTimeDialog : HabitFormEvent
 
     data object ToggleIsStrict : HabitFormEvent
 }
