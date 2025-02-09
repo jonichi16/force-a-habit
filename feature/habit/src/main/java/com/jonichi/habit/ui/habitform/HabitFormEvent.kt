@@ -10,4 +10,6 @@ sealed interface HabitFormEvent {
     data object ToggleTimeDialog : HabitFormEvent
 
     data object SaveHabit : HabitFormEvent
+
+    data object ToggleIsStrict : HabitFormEvent
 }

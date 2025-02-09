@@ -36,6 +36,7 @@ class HabitFormTest {
         val title = mutableStateOf("")
         val schedule = mutableStateOf(LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE))
         val isTimeDialogOpen = mutableStateOf(false)
+        val isStrict = mutableStateOf(false)
         composeTestRule.setContent {
             ForceAHabitTheme {
                 HabitForm(
@@ -44,6 +45,7 @@ class HabitFormTest {
                             title = title.value,
                             schedule = schedule.value,
                             isTimeDialogOpen = isTimeDialogOpen.value,
+                            isStrict = isStrict.value
                         ),
                     onEvent = { event ->
                         when (event) {
@@ -57,6 +59,9 @@ class HabitFormTest {
                                 isTimeDialogOpen.value = !isTimeDialogOpen.value
                             }
                             HabitFormEvent.SaveHabit -> {}
+                            HabitFormEvent.ToggleIsStrict -> {
+                                isStrict.value = !isStrict.value
+                            }
                         }
                     },
                     onBackAction = {},
