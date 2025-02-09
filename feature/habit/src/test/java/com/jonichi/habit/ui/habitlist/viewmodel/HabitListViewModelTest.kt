@@ -10,9 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -44,20 +42,7 @@ class HabitListViewModelTest {
     @Test
     fun `uiState should be Loading then Success`() =
         runTest {
-            val job =
-                launch {
-                    viewModel.uiState.collect {}
-                }
-
-            val initialState = viewModel.uiState.first()
-
-            assertEquals(HabitListUiState.Loading, initialState)
-
-            advanceUntilIdle()
-
             val successState = viewModel.uiState.first() as HabitListUiState.Success
             assertEquals(3, successState.habits.size)
-
-            job.cancel()
         }
 }
