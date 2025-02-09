@@ -77,4 +77,14 @@ class HabitDaoTest {
             val allHabits = habitDao.getAllHabits().first()
             assertEquals(allHabits.size, 2)
         }
+
+    @Test
+    @Throws(IOException::class)
+    fun habitDao_retrieveHabitById() =
+        runBlocking {
+            addTwoHabits()
+            val habit = habitDao.getHabitById(1).first()
+            assertEquals(habit1.title, habit.title)
+            assertEquals(habit1.schedule, habit.schedule)
+        }
 }
