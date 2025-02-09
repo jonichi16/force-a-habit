@@ -14,5 +14,6 @@ sealed interface HabitFormUiState {
         val schedule: LocalTime = LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE),
         val isTimeDialogOpen: Boolean = false,
         val isStrict: Boolean = false,
+        val errorMessages: List<String> = emptyList(),
     ) : HabitFormUiState
 }

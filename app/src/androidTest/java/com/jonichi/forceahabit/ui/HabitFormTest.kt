@@ -38,6 +38,7 @@ class HabitFormTest {
         val schedule = mutableStateOf(LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE))
         val isTimeDialogOpen = mutableStateOf(false)
         val isStrict = mutableStateOf(false)
+        val errorMessages = mutableStateOf<List<String>>(emptyList())
         composeTestRule.setContent {
             ForceAHabitTheme {
                 HabitForm(
@@ -47,6 +48,7 @@ class HabitFormTest {
                             schedule = schedule.value,
                             isTimeDialogOpen = isTimeDialogOpen.value,
                             isStrict = isStrict.value,
+                            errorMessages = errorMessages.value,
                         ),
                     onEvent = { event ->
                         when (event) {
@@ -56,10 +58,14 @@ class HabitFormTest {
                             is HabitFormEvent.UpdateSchedule -> {
                                 schedule.value = event.schedule
                             }
+                            is HabitFormEvent.SaveHabit -> {
+                                if (title.value.isBlank() || title.value.isEmpty()) {
+                                    errorMessages.value = listOf("Title is required")
+                                }
+                            }
                             HabitFormEvent.ToggleTimeDialog -> {
                                 isTimeDialogOpen.value = !isTimeDialogOpen.value
                             }
-                            HabitFormEvent.SaveHabit -> {}
                             HabitFormEvent.ToggleIsStrict -> {
                                 isStrict.value = !isStrict.value
                             }
@@ -101,5 +107,11 @@ class HabitFormTest {
         composeTestRule.onNodeWithText("00").performTextReplacement("40")
         composeTestRule.onNodeWithTag(TAG_BUTTON_CONFIRM).performClick()
         composeTestRule.onNodeWithText("04:40 AM").assertIsDisplayed()
+    }
+
+    @Test
+    fun habitForm_shouldDisplayErrorMessages() {
+        composeTestRule.onNodeWithText("Save").performClick()
+        composeTestRule.onNodeWithText("Title is required").assertIsDisplayed()
     }
 }

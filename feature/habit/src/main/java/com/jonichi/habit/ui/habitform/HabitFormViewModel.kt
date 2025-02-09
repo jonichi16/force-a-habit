@@ -28,8 +28,8 @@ class HabitFormViewModel
             when (event) {
                 is HabitFormEvent.UpdateTitle -> updateTitle(event.title)
                 is HabitFormEvent.UpdateSchedule -> updateSchedule(event.schedule)
+                is HabitFormEvent.SaveHabit -> saveHabit(event.onSuccess)
                 HabitFormEvent.ToggleTimeDialog -> toggleTimeDialog()
-                HabitFormEvent.SaveHabit -> saveHabit()
                 HabitFormEvent.ToggleIsStrict -> toggleIsStrict()
             }
         }
@@ -58,19 +58,28 @@ class HabitFormViewModel
             }
         }
 
-        private fun saveHabit() {
+        private fun saveHabit(onSuccess: () -> Unit) {
             viewModelScope.launch {
                 updateSuccessState { state ->
-                    val habitToSave =
-                        Habit(
-                            title = state.title,
-                            schedule = state.schedule,
-                            isStrict = state.isStrict,
-                        )
-                    habitRepository.upsert(habitToSave)
-                    state
+                    if (validateTitle(title = state.title)) {
+                        val habitToSave =
+                            Habit(
+                                title = state.title,
+                                schedule = state.schedule,
+                                isStrict = state.isStrict,
+                            )
+                        habitRepository.upsert(habitToSave)
+                        onSuccess()
+                        state
+                    } else {
+                        state.copy(errorMessages = listOf("Title is required"))
+                    }
                 }
             }
+        }
+
+        private fun validateTitle(title: String): Boolean {
+            return title.isNotEmpty() || title.isNotBlank()
         }
 
         private fun loadHabit() {

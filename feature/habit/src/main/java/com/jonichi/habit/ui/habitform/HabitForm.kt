@@ -48,6 +48,7 @@ fun HabitForm(
                         onValueChange = { title ->
                             onEvent(HabitFormEvent.UpdateTitle(title))
                         },
+                        errorMessages = state.errorMessages,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     HabitClickableField(
@@ -66,8 +67,7 @@ fun HabitForm(
                 HabitButton(
                     label = "Save",
                     onClick = {
-                        onEvent(HabitFormEvent.SaveHabit)
-                        onBackAction()
+                        onEvent(HabitFormEvent.SaveHabit(onBackAction))
                     },
                 )
                 if (state.isTimeDialogOpen) {
