@@ -1,6 +1,5 @@
 package com.jonichi.forceahabit
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -8,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -20,11 +18,18 @@ import com.jonichi.habit.ui.habitform.HabitForm
 import com.jonichi.habit.ui.habitform.HabitFormViewModel
 import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitListViewModel
+import com.jonichi.habit.ui.habittopbar.HabitTopBar
+import com.jonichi.habit.ui.habittopbar.HabitTopBarViewModel
 
 @Composable
-fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
+fun ForceAHabitApp(
+    navController: NavHostController = rememberNavController(),
+    topBarViewModel: HabitTopBarViewModel = hiltViewModel(),
+) {
+    val topBarState by topBarViewModel.topBarState.collectAsState()
+
     Scaffold(
-        contentWindowInsets = WindowInsets(0.dp),
+        topBar = { HabitTopBar(state = topBarState) },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
 
@@ -38,6 +43,7 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             ) {
                 val habitState: HabitListViewModel = hiltViewModel()
                 val uiState by habitState.uiState.collectAsState()
+                topBarViewModel.updateTopBar(title = "Home")
 
                 HabitList(
                     state = uiState,
@@ -53,11 +59,13 @@ fun ForceAHabitApp(navController: NavHostController = rememberNavController()) {
             ) {
                 val habitFormViewModel: HabitFormViewModel = hiltViewModel()
                 val state by habitFormViewModel.uiState.collectAsState()
+                val onBackAction: () -> Unit = { navController.popBackStack() }
+                topBarViewModel.updateTopBar(title = "Add Habit", onBackAction = onBackAction)
 
                 HabitForm(
                     state = state,
                     onEvent = habitFormViewModel::onEvent,
-                    onBackAction = { navController.popBackStack() },
+                    onBackAction = onBackAction,
                 )
             }
         }

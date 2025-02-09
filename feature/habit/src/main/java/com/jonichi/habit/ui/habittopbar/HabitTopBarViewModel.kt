@@ -8,14 +8,18 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class HabitTopBarViewModel @Inject constructor() : ViewModel() {
-    private val _topBarState = MutableStateFlow(TopBarState())
-    val topBarState = _topBarState.asStateFlow()
+class HabitTopBarViewModel
+    @Inject
+    constructor() : ViewModel() {
+        private val _topBarState = MutableStateFlow(TopBarState())
+        val topBarState = _topBarState.asStateFlow()
 
-
-    fun updateTopBar(title: String, onBackAction: (() -> Unit)? = null) {
-        _topBarState.update { state ->
-            state.copy(title = title, onBackAction = onBackAction)
+        fun updateTopBar(
+            title: String,
+            onBackAction: (() -> Unit)? = null,
+        ) {
+            _topBarState.update { state ->
+                state.copy(title = title, onBackAction = onBackAction)
+            }
         }
     }
-}
