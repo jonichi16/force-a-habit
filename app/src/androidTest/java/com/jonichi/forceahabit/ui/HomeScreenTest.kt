@@ -3,11 +3,14 @@ package com.jonichi.forceahabit.ui
 import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
+import com.jonichi.common.constant.TAG_BACK_ARROW
+import com.jonichi.common.constant.TAG_STRICT_BADGE
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitListUiState
@@ -38,7 +41,7 @@ class HomeScreenTest {
                                     id = 2,
                                     title = "Habit 2",
                                     schedule = LocalTime.of(14, 0),
-                                    isStrict = false,
+                                    isStrict = true,
                                 ),
                                 Habit(
                                     id = 3,
@@ -58,8 +61,10 @@ class HomeScreenTest {
         composeTestRule.onNodeWithText("Habit 2").assertIsDisplayed()
         composeTestRule.onNodeWithText("Habit 3").assertIsDisplayed()
 
-        composeTestRule.onAllNodesWithText("12:00").assertCountEquals(2)
-        composeTestRule.onNodeWithText("14:00").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("12:00 PM").assertCountEquals(2)
+        composeTestRule.onNodeWithText("02:00 PM").assertIsDisplayed()
         composeTestRule.onNodeWithTag(TAG_ADD_HABIT_NAVIGATION).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_BACK_ARROW).assertIsNotDisplayed()
+        composeTestRule.onNodeWithTag(TAG_STRICT_BADGE).assertIsDisplayed()
     }
 }

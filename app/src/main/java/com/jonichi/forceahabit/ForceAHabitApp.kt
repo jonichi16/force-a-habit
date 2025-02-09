@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -38,9 +39,10 @@ fun ForceAHabitApp(
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier
-                .padding(innerPadding)
-                .background(MaterialTheme.colorScheme.background),
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .background(MaterialTheme.colorScheme.background),
         ) {
             composable(
                 route = Screen.Home.route,
@@ -55,6 +57,7 @@ fun ForceAHabitApp(
                         { habitId ->
                             navController.navigate("habitForm/$habitId")
                         },
+                    modifier = Modifier.padding(16.dp),
                 )
             }
             composable(
@@ -70,6 +73,7 @@ fun ForceAHabitApp(
                     state = state,
                     onEvent = habitFormViewModel::onEvent,
                     onBackAction = onBackAction,
+                    modifier = Modifier.padding(16.dp),
                 )
             }
         }
