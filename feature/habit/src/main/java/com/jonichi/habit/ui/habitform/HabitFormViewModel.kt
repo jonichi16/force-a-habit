@@ -2,16 +2,11 @@ package com.jonichi.habit.ui.habitform
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jonichi.common.constant.SHARING_STARTED_TIMEOUT
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
-import com.jonichi.habit.ui.habitlist.HabitListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import javax.inject.Inject
