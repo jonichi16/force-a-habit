@@ -4,9 +4,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.jonichi.common.util.timeFormatter
 import com.jonichi.uicommon.components.atoms.HabitText
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun TimeText(
@@ -15,7 +15,7 @@ fun TimeText(
     modifier: Modifier = Modifier,
 ) {
     HabitText(
-        text = time.format(DateTimeFormatter.ofPattern("hh:mm a")),
+        text = timeFormatter(time),
         color = color,
         modifier = modifier,
     )
