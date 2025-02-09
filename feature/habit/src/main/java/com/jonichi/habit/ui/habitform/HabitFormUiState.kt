@@ -13,6 +13,6 @@ sealed interface HabitFormUiState {
         val title: String = "",
         val schedule: LocalTime = LocalTime.of(DEFAULT_HOUR, DEFAULT_MINUTE),
         val isTimeDialogOpen: Boolean = false,
-        val isStrict: Boolean = false
+        val isStrict: Boolean = false,
     ) : HabitFormUiState
 }

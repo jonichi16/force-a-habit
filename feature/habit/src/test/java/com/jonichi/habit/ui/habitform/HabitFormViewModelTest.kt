@@ -72,11 +72,12 @@ class HabitFormViewModelTest {
         }
 
     @Test
-    fun `viewModel should be able to switch isStrict`() = runTest {
-        viewModel.onEvent(HabitFormEvent.ToggleIsStrict)
-        val updateState = viewModel.uiState.first() as HabitFormUiState.Success
-        assert(updateState.isStrict)
-    }
+    fun `viewModel should be able to switch isStrict`() =
+        runTest {
+            viewModel.onEvent(HabitFormEvent.ToggleIsStrict)
+            val updateState = viewModel.uiState.first() as HabitFormUiState.Success
+            assert(updateState.isStrict)
+        }
 
     @Test
     fun `viewModel should invoke repository upsert when saving`() =
