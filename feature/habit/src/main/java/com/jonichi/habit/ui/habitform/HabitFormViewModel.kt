@@ -65,6 +65,7 @@ class HabitFormViewModel
                         Habit(
                             title = state.title,
                             schedule = state.schedule,
+                            isStrict = state.isStrict,
                         )
                     habitRepository.upsert(habitToSave)
                     state

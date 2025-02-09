@@ -17,6 +17,7 @@ import com.jonichi.common.constant.DEFAULT_MINUTE
 import com.jonichi.common.constant.TAG_BUTTON_CANCEL
 import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
 import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
+import com.jonichi.common.constant.TAG_SWITCH
 import com.jonichi.common.constant.TAG_TIME_INPUT
 import com.jonichi.habit.ui.habitform.HabitForm
 import com.jonichi.habit.ui.habitform.HabitFormEvent
@@ -45,7 +46,7 @@ class HabitFormTest {
                             title = title.value,
                             schedule = schedule.value,
                             isTimeDialogOpen = isTimeDialogOpen.value,
-                            isStrict = isStrict.value
+                            isStrict = isStrict.value,
                         ),
                     onEvent = { event ->
                         when (event) {
@@ -75,6 +76,9 @@ class HabitFormTest {
         composeTestRule.onNodeWithText("Title").assertIsDisplayed()
         composeTestRule.onNodeWithText("Time").assertIsDisplayed()
         composeTestRule.onAllNodesWithTag(TAG_FORM_INPUT_FIELD).assertCountEquals(2)
+        composeTestRule.onNodeWithTag(TAG_SWITCH).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(TAG_SWITCH).assertHasClickAction()
+        composeTestRule.onNodeWithText("Strict?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Save").assertIsDisplayed()
         composeTestRule.onNodeWithText("Save").assertHasClickAction()
     }
