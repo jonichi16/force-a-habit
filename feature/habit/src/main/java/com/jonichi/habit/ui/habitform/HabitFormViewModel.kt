@@ -30,6 +30,7 @@ class HabitFormViewModel
                 is HabitFormEvent.UpdateSchedule -> updateSchedule(event.schedule)
                 HabitFormEvent.ToggleTimeDialog -> toggleTimeDialog()
                 HabitFormEvent.SaveHabit -> saveHabit()
+                HabitFormEvent.ToggleIsStrict -> toggleIsStrict()
             }
         }
 
@@ -48,6 +49,12 @@ class HabitFormViewModel
         private fun toggleTimeDialog() {
             updateSuccessState { state ->
                 state.copy(isTimeDialogOpen = !state.isTimeDialogOpen)
+            }
+        }
+
+        private fun toggleIsStrict() {
+            updateSuccessState { state ->
+                state.copy(isStrict = !state.isStrict)
             }
         }
 
