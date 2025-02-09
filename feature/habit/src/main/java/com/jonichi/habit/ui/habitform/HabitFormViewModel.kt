@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.jonichi.common.constant.SHARING_STARTED_TIMEOUT
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
+import com.jonichi.habit.ui.habitlist.HabitListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -21,13 +23,11 @@ class HabitFormViewModel
         private val habitRepository: HabitRepository,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow<HabitFormUiState>(HabitFormUiState.Loading)
-        val uiState =
-            _uiState.onStart { loadHabit() }
-                .stateIn(
-                    viewModelScope,
-                    SharingStarted.WhileSubscribed(SHARING_STARTED_TIMEOUT),
-                    HabitFormUiState.Loading,
-                )
+        val uiState = _uiState.asStateFlow()
+
+        init {
+            loadHabit()
+        }
 
         fun onEvent(event: HabitFormEvent) {
             when (event) {
@@ -65,12 +65,13 @@ class HabitFormViewModel
                             schedule = state.schedule,
                         )
                     habitRepository.upsert(habitToSave)
-                    HabitFormUiState.Success()
+                    state
                 }
             }
         }
 
         private fun loadHabit() {
+            _uiState.value = HabitFormUiState.Loading
             viewModelScope.launch {
                 _uiState.value =
                     HabitFormUiState.Success()
