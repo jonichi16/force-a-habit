@@ -1,30 +1,22 @@
 package com.jonichi.habit.ui.habitform
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalContentColor
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TimeInput
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import com.jonichi.common.constant.DEFAULT_HOUR
-import com.jonichi.common.constant.DEFAULT_MINUTE
-import com.jonichi.common.constant.TAG_BUTTON_CANCEL
-import com.jonichi.common.constant.TAG_BUTTON_CONFIRM
-import com.jonichi.common.constant.TAG_FORM_INPUT_FIELD
-import com.jonichi.common.constant.TAG_TIME_INPUT
+import androidx.compose.ui.unit.dp
+import com.jonichi.common.util.timeFormatter
+import com.jonichi.uicommon.components.atoms.HabitButton
+import com.jonichi.uicommon.components.mocecules.HabitClickableField
+import com.jonichi.uicommon.components.mocecules.HabitTextField
+import com.jonichi.uicommon.components.organisms.TimePickerDialog
 import com.jonichi.uicommon.theme.ForceAHabitTheme
 import java.time.LocalTime
 
@@ -35,44 +27,42 @@ fun HabitForm(
     onBackAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
         when (state) {
             HabitFormUiState.Error -> TODO()
             HabitFormUiState.Loading -> {
                 Text(text = "Loading...")
             }
             is HabitFormUiState.Success -> {
-                HabitTextField(
-                    label = "Title",
-                    value = state.title,
-                    onValueChange = { title ->
-                        onEvent(HabitFormEvent.UpdateTitle(title))
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    HabitTextField(
+                        label = "Title",
+                        value = state.title,
+                        onValueChange = { title ->
+                            onEvent(HabitFormEvent.UpdateTitle(title))
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    Spacer(modifier = Modifier.height(16.dp).fillMaxWidth())
+                    HabitClickableField(
+                        label = "Time",
+                        value = timeFormatter(state.schedule),
+                        onClick = { onEvent(HabitFormEvent.ToggleTimeDialog) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                HabitButton(
+                    label = "Save",
+                    onClick = {
+                        onEvent(HabitFormEvent.SaveHabit)
+                        onBackAction()
                     },
                 )
-                HabitTextField(
-                    label = "Time",
-                    value = state.schedule.toString(),
-                    readOnly = true,
-                    enabled = false,
-                    onValueChange = {},
-                    colors =
-                        TextFieldDefaults.colors(
-                            disabledIndicatorColor = Color.Gray,
-                            disabledTextColor = LocalContentColor.current,
-                            disabledLabelColor = LocalContentColor.current,
-                        ),
-                    modifier =
-                        Modifier
-                            .clickable(role = Role.Button) {
-                                onEvent(HabitFormEvent.ToggleTimeDialog)
-                            },
-                )
-                Button(onClick = {
-                    onEvent(HabitFormEvent.SaveHabit)
-                    onBackAction()
-                }) {
-                    Text("Save")
-                }
                 if (state.isTimeDialogOpen) {
                     TimePickerDialog(
                         onToggleTimeDialog = { onEvent(HabitFormEvent.ToggleTimeDialog) },
@@ -85,66 +75,6 @@ fun HabitForm(
             }
         }
     }
-}
-
-@Composable
-fun HabitTextField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    readOnly: Boolean = false,
-    enabled: Boolean = true,
-    colors: TextFieldColors = TextFieldDefaults.colors(),
-) {
-    TextField(
-        label = { Text(text = label) },
-        value = value,
-        onValueChange = onValueChange,
-        readOnly = readOnly,
-        enabled = enabled,
-        colors = colors,
-        modifier = modifier.testTag(TAG_FORM_INPUT_FIELD),
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TimePickerDialog(
-    onToggleTimeDialog: () -> Unit,
-    confirmButton: (hour: Int, minute: Int) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val timePickerState =
-        rememberTimePickerState(
-            initialHour = DEFAULT_HOUR,
-            initialMinute = DEFAULT_MINUTE,
-        )
-    AlertDialog(
-        onDismissRequest = onToggleTimeDialog,
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    confirmButton(timePickerState.hour, timePickerState.minute)
-                },
-                modifier = Modifier.testTag(TAG_BUTTON_CONFIRM),
-            ) {
-                Text(text = "Confirm")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onToggleTimeDialog, modifier = Modifier.testTag(TAG_BUTTON_CANCEL)) {
-                Text(text = "Cancel")
-            }
-        },
-        title = { Text("Select time") },
-        text = {
-            TimeInput(
-                state = timePickerState,
-                modifier = modifier.testTag(TAG_TIME_INPUT),
-            )
-        },
-    )
 }
 
 @PreviewLightDark
