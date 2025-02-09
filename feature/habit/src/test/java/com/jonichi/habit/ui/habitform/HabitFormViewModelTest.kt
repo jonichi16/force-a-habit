@@ -82,12 +82,32 @@ class HabitFormViewModelTest {
     @Test
     fun `viewModel should invoke repository upsert when saving`() =
         runTest {
-            viewModel.onEvent(HabitFormEvent.SaveHabit)
+            viewModel.onEvent(HabitFormEvent.SaveHabit {})
+            viewModel.onEvent(HabitFormEvent.UpdateTitle("Habit 1"))
             advanceUntilIdle()
 
-            coVerify { habitRepository.upsert(any<Habit>()) }
+            coVerify {
+                habitRepository.upsert(
+                    Habit(title = "Habit 1", schedule = LocalTime.of(8, 0)),
+                )
+            }
 
             val currentState = viewModel.uiState.first()
             assert(currentState is HabitFormUiState.Success)
+        }
+
+    @Test
+    fun `viewModel should validate title`() =
+        runTest {
+            viewModel.onEvent(HabitFormEvent.SaveHabit {})
+            advanceUntilIdle()
+
+            val currentState = viewModel.uiState.first() as HabitFormUiState.Success
+            assertEquals(1, currentState.errorMessages.size)
+            coVerify(exactly = 0) {
+                habitRepository.upsert(
+                    any<Habit>(),
+                )
+            }
         }
 }
