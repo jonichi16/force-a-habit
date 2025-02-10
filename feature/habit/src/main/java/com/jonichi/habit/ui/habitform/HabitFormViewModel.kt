@@ -73,7 +73,7 @@ class HabitFormViewModel
                                 title = state.title,
                                 schedule = state.schedule,
                                 isStrict = state.isStrict,
-                                updatedAt = System.currentTimeMillis()
+                                updatedAt = System.currentTimeMillis(),
                             )
                         withContext(Dispatchers.IO) {
                             habitRepository.upsert(habitToSave)
