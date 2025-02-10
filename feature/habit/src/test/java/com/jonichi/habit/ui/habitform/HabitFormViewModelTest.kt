@@ -7,6 +7,7 @@ import com.jonichi.habit.ui.habitlist.data.getHabitList
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -87,18 +88,22 @@ class HabitFormViewModelTest {
     @Test
     fun `viewModel should invoke repository upsert when saving`() =
         runTest {
-            viewModel.onEvent(HabitFormEvent.SaveHabit {})
-            viewModel.onEvent(HabitFormEvent.UpdateTitle("Habit 1"))
+            val habitSlot = slot<Habit>()
+            coEvery { habitRepository.upsert(capture(habitSlot)) } returns Unit
+
+            viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
             advanceUntilIdle()
 
-            coVerify {
-                habitRepository.upsert(
-                    Habit(title = "Habit 1", schedule = LocalTime.of(8, 0)),
-                )
-            }
+            viewModel.onEvent(HabitFormEvent.UpdateTitle("Habit 1"))
+            viewModel.onEvent(HabitFormEvent.SaveHabit {})
+            advanceUntilIdle()
+
+            coVerify(exactly = 1) { habitRepository.upsert(any()) }
 
             val currentState = viewModel.uiState.first()
             assert(currentState is HabitFormUiState.Success)
+            assertEquals("Habit 1", habitSlot.captured.title)
+            assertEquals(LocalTime.of(8, 0), habitSlot.captured.schedule)
         }
 
     @Test
@@ -123,10 +128,34 @@ class HabitFormViewModelTest {
             coEvery { habitRepository.getHabitById(1) } returns getHabitList()[0]
 
             viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
-
             advanceUntilIdle()
 
             val currentState = viewModel.uiState.first() as HabitFormUiState.Success
             assertEquals("Habit 1", currentState.title)
+        }
+
+    @Test
+    fun `viewModel should update the habit`() =
+        runTest {
+            val habitToUpdate = getHabitList()[0]
+            val habitSlot = slot<Habit>()
+            coEvery { savedStateHandle.get<Int>(key = "habitId") } returns 1
+            coEvery { habitRepository.getHabitById(1) } returns habitToUpdate
+            coEvery { habitRepository.upsert(capture(habitSlot)) } returns Unit
+
+            viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
+            advanceUntilIdle()
+            viewModel.onEvent(HabitFormEvent.UpdateTitle("Updated Habit"))
+            viewModel.onEvent(HabitFormEvent.UpdateSchedule(LocalTime.of(10, 15)))
+
+            viewModel.onEvent(HabitFormEvent.SaveHabit {})
+            advanceUntilIdle()
+
+            coVerify(exactly = 1) { habitRepository.upsert(any()) }
+
+            val currentState = viewModel.uiState.first()
+            assert(currentState is HabitFormUiState.Success)
+            assertEquals("Updated Habit", habitSlot.captured.title)
+            assertEquals(LocalTime.of(10, 15), habitSlot.captured.schedule)
         }
 }
