@@ -1,14 +1,17 @@
 package com.jonichi.forceahabit
 
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.jonichi.common.constant.TAG_ADD_HABIT_NAVIGATION
 import com.jonichi.common.constant.TAG_BACK_ARROW
+import com.jonichi.common.constant.TAG_EDIT_ICON
 import com.jonichi.habit.di.RepositoryModule
 import com.jonichi.habit.domain.repository.HabitRepository
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -41,6 +44,7 @@ class NavigationTest {
         composeTestRule.onNodeWithText("Home").assertIsDisplayed()
         composeTestRule.onNodeWithText("Habit 1").assertIsDisplayed()
         composeTestRule.onNodeWithTag(TAG_BACK_ARROW).assertIsNotDisplayed()
+        composeTestRule.onAllNodesWithTag(TAG_EDIT_ICON).assertCountEquals(3)
     }
 
     @Test
@@ -62,5 +66,11 @@ class NavigationTest {
         composeTestRule.onNodeWithText("Title").performTextInput("Habit 3")
         composeTestRule.onNodeWithText("Save").performClick()
         composeTestRule.onNodeWithText("Home").assertIsDisplayed()
+    }
+
+    @Test
+    fun fahNavHost_verifyHomeToNavigateToHabitFormWhenEditing() {
+        composeTestRule.onAllNodesWithTag(TAG_EDIT_ICON)[0].performClick()
+        composeTestRule.onNodeWithText("Add Habit").assertIsDisplayed()
     }
 }
