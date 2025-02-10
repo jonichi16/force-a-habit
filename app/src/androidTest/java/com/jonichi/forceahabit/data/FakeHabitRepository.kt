@@ -38,4 +38,13 @@ class FakeHabitRepository
                 ),
             )
         }
+
+    override suspend fun getHabitById(id: Int): Habit {
+        return Habit(
+                id = 1,
+                title = "Habit 1",
+                schedule = LocalTime.of(12, 0),
+                isStrict = false,
+            )
     }
+}

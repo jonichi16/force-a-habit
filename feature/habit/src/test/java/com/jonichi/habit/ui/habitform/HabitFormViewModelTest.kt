@@ -1,7 +1,9 @@
 package com.jonichi.habit.ui.habitform
 
+import androidx.lifecycle.SavedStateHandle
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
+import com.jonichi.habit.ui.habitlist.data.getHabitList
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -23,6 +25,7 @@ import java.time.LocalTime
 class HabitFormViewModelTest {
     private lateinit var viewModel: HabitFormViewModel
     private val habitRepository: HabitRepository = mockk()
+    private val savedStateHandle: SavedStateHandle = mockk()
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
@@ -31,7 +34,9 @@ class HabitFormViewModelTest {
 
         coEvery { habitRepository.upsert(any<Habit>()) } returns Unit
 
-        viewModel = HabitFormViewModel(habitRepository)
+        coEvery { savedStateHandle.get<Int>(key = "habitId") } returns null
+
+        viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
     }
 
     @After
@@ -109,5 +114,19 @@ class HabitFormViewModelTest {
                     any<Habit>(),
                 )
             }
+        }
+
+    @Test
+    fun `viewModel should load correct habit`() =
+        runTest {
+            coEvery { savedStateHandle.get<Int>(key = "habitId") } returns 1
+            coEvery { habitRepository.getHabitById(1) } returns getHabitList()[0]
+
+            viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
+
+            advanceUntilIdle()
+
+            val currentState = viewModel.uiState.first() as HabitFormUiState.Success
+            assertEquals("Habit 1", currentState.title)
         }
 }
