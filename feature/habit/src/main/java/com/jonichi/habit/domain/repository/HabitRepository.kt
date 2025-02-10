@@ -7,4 +7,6 @@ interface HabitRepository {
     suspend fun upsert(habit: Habit)
 
     suspend fun getAllHabits(): Flow<List<Habit>>
+
+    suspend fun getHabitById(id: Int): Habit
 }

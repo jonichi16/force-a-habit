@@ -1,5 +1,6 @@
 package com.jonichi.habit.ui.habitform
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jonichi.habit.domain.model.Habit
@@ -16,12 +17,15 @@ class HabitFormViewModel
     @Inject
     constructor(
         private val habitRepository: HabitRepository,
+        savedStateHandle: SavedStateHandle,
     ) : ViewModel() {
+        private val habitId: Int? = savedStateHandle["habitId"]
         private val _uiState = MutableStateFlow<HabitFormUiState>(HabitFormUiState.Loading)
         val uiState = _uiState.asStateFlow()
 
         init {
             loadHabit()
+            println(habitId)
         }
 
         fun onEvent(event: HabitFormEvent) {
@@ -85,8 +89,19 @@ class HabitFormViewModel
         private fun loadHabit() {
             _uiState.value = HabitFormUiState.Loading
             viewModelScope.launch {
-                _uiState.value =
-                    HabitFormUiState.Success()
+                if (habitId != 0 && habitId != null) {
+                    habitRepository.getHabitById(habitId).let { habit ->
+                        _uiState.value =
+                            HabitFormUiState.Success(
+                                title = habit.title,
+                                schedule = habit.schedule,
+                                isStrict = habit.isStrict,
+                            )
+                    }
+                } else {
+                    _uiState.value =
+                        HabitFormUiState.Success()
+                }
             }
         }
 
