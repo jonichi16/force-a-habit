@@ -24,10 +24,9 @@ fun HabitIconButton(
         Icon(
             imageVector = imageVector,
             contentDescription = contentDescription,
-            tint = tint
+            tint = tint,
         )
     }
-
 }
 
 @PreviewLightDark
@@ -37,7 +36,7 @@ fun HabitIconButtonPreview() {
         HabitIconButton(
             onClick = {},
             imageVector = Icons.Filled.Edit,
-            contentDescription = ""
+            contentDescription = "",
         )
     }
 }

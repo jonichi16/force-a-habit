@@ -29,4 +29,4 @@ class HabitRepositoryImpl
         override suspend fun getHabitById(id: Int): Habit {
             return habitDao.getHabitById(id).toDomain()
         }
-}
+    }
