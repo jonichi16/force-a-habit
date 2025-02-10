@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -25,7 +27,6 @@ class HabitFormViewModel
 
         init {
             loadHabit()
-            println(habitId)
         }
 
         fun onEvent(event: HabitFormEvent) {
@@ -68,11 +69,15 @@ class HabitFormViewModel
                     if (validateTitle(title = state.title)) {
                         val habitToSave =
                             Habit(
+                                id = habitId ?: 0,
                                 title = state.title,
                                 schedule = state.schedule,
                                 isStrict = state.isStrict,
+                                updatedAt = System.currentTimeMillis()
                             )
-                        habitRepository.upsert(habitToSave)
+                        withContext(Dispatchers.IO) {
+                            habitRepository.upsert(habitToSave)
+                        }
                         onSuccess()
                         state
                     } else {
@@ -90,13 +95,15 @@ class HabitFormViewModel
             _uiState.value = HabitFormUiState.Loading
             viewModelScope.launch {
                 if (habitId != 0 && habitId != null) {
-                    habitRepository.getHabitById(habitId).let { habit ->
-                        _uiState.value =
-                            HabitFormUiState.Success(
-                                title = habit.title,
-                                schedule = habit.schedule,
-                                isStrict = habit.isStrict,
-                            )
+                    withContext(Dispatchers.IO) {
+                        habitRepository.getHabitById(habitId).let { habit ->
+                            _uiState.value =
+                                HabitFormUiState.Success(
+                                    title = habit.title,
+                                    schedule = habit.schedule,
+                                    isStrict = habit.isStrict,
+                                )
+                        }
                     }
                 } else {
                     _uiState.value =
