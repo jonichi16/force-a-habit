@@ -29,9 +29,9 @@ fun HabitCard(
         shape = RoundedCornerShape(4.dp),
         modifier =
             modifier
-                .padding(vertical = 8.dp)
+                .padding(vertical = 8.dp),
     ) {
-            content()
+        content()
     }
 }
 
@@ -44,4 +44,3 @@ fun HabitCardPreview() {
         }
     }
 }
-

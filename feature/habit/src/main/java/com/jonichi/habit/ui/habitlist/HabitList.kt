@@ -58,71 +58,98 @@ fun HabitList(
                     LazyColumn {
                         items(state.habits) { habit ->
                             HabitCard(
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
                             ) {
-                                Column (
+                                Column(
                                     modifier = Modifier.padding(16.dp),
                                 ) {
-                                    Row(
-                                        verticalAlignment = Alignment.Top,
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        HabitText(
-                                            text = habit.title,
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            typography = MaterialTheme.typography.titleMedium,
-                                            modifier = Modifier.weight(1f).padding(end = 8.dp)
-                                        )
-                                        if (habit.isStrict) {
-                                            StrictBadge()
-                                        }
-                                    }
+                                    HabitTitle(habit = habit)
                                     Spacer(modifier = Modifier.height(8.dp))
-                                    Row {
-                                        HabitText(
-                                            text = timeFormatter(habit.schedule),
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            fontWeight = FontWeight.Medium
-                                        )
-                                    }
+                                    HabitDetails(habit = habit)
                                     Spacer(modifier = Modifier.height(8.dp))
                                     HorizontalDivider()
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.End,
-                                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                                     ) {
                                         HabitIconButton(
                                             imageVector = Icons.Filled.Edit,
                                             onClick = { onNavigateToHabitForm(habit.id) },
                                             contentDescription = "Edit habit",
                                             tint = MaterialTheme.colorScheme.onPrimary,
-                                            modifier = Modifier.size(20.dp).testTag(TAG_EDIT_ICON)
+                                            modifier = Modifier.size(20.dp).testTag(TAG_EDIT_ICON),
                                         )
                                     }
                                 }
                             }
                         }
                     }
-                    FloatingActionButton(
+                    HabitFloatingActionButton(
                         onClick = {
                             onNavigateToHabitForm(0)
                         },
-                        shape = CircleShape,
                         modifier =
                             Modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(16.dp)
                                 .testTag(TAG_ADD_HABIT_NAVIGATION),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Add,
-                            contentDescription = "add habit",
-                        )
-                    }
+                    )
                 }
             }
         }
+    }
+}
+
+@Composable
+fun HabitFloatingActionButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    FloatingActionButton(
+        onClick = onClick,
+        shape = CircleShape,
+        modifier = modifier,
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Add,
+            contentDescription = "add habit",
+        )
+    }
+}
+
+@Composable
+fun HabitTitle(
+    habit: Habit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        verticalAlignment = Alignment.Top,
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        HabitText(
+            text = habit.title,
+            color = MaterialTheme.colorScheme.onPrimary,
+            typography = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.weight(1f).padding(end = 8.dp),
+        )
+        if (habit.isStrict) {
+            StrictBadge()
+        }
+    }
+}
+
+@Composable
+fun HabitDetails(
+    habit: Habit,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier = modifier) {
+        HabitText(
+            text = timeFormatter(habit.schedule),
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Medium,
+        )
     }
 }
 
