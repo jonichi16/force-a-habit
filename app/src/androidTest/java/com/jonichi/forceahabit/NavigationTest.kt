@@ -72,5 +72,6 @@ class NavigationTest {
     fun fahNavHost_verifyHomeToNavigateToHabitFormWhenEditing() {
         composeTestRule.onAllNodesWithTag(TAG_EDIT_ICON)[0].performClick()
         composeTestRule.onNodeWithText("Add Habit").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Habit 1").assertIsDisplayed()
     }
 }
