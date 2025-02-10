@@ -20,6 +20,7 @@ fun HabitText(
     fontWeight: FontWeight? = null,
     fontStyle: FontStyle? = null,
     fontFamily: FontFamily? = null,
+    lineHeight: TextUnit? = null,
     typography: TextStyle = MaterialTheme.typography.bodyMedium,
 ) {
     Text(
@@ -29,6 +30,8 @@ fun HabitText(
         fontWeight = fontWeight ?: typography.fontWeight,
         fontStyle = fontStyle ?: typography.fontStyle,
         fontFamily = fontFamily ?: typography.fontFamily,
+        lineHeight = lineHeight ?: typography.lineHeight,
+        style = typography,
         modifier = modifier,
     )
 }
