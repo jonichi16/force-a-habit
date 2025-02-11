@@ -6,11 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.jonichi.habit.domain.model.Habit
 import com.jonichi.habit.domain.repository.HabitRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -75,9 +73,7 @@ class HabitFormViewModel
                                 isStrict = state.isStrict,
                                 updatedAt = System.currentTimeMillis(),
                             )
-                        withContext(Dispatchers.IO) {
-                            habitRepository.upsert(habitToSave)
-                        }
+                        habitRepository.upsert(habitToSave)
                         onSuccess()
                         state
                     } else {
@@ -95,15 +91,13 @@ class HabitFormViewModel
             _uiState.value = HabitFormUiState.Loading
             viewModelScope.launch {
                 if (habitId != 0 && habitId != null) {
-                    withContext(Dispatchers.IO) {
-                        habitRepository.getHabitById(habitId).let { habit ->
-                            _uiState.value =
-                                HabitFormUiState.Success(
-                                    title = habit.title,
-                                    schedule = habit.schedule,
-                                    isStrict = habit.isStrict,
-                                )
-                        }
+                    habitRepository.getHabitById(habitId).let { habit ->
+                        _uiState.value =
+                            HabitFormUiState.Success(
+                                title = habit.title,
+                                schedule = habit.schedule,
+                                isStrict = habit.isStrict,
+                            )
                     }
                 } else {
                     _uiState.value =
