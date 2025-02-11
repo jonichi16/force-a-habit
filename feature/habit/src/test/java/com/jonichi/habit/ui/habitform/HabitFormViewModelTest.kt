@@ -25,8 +25,8 @@ import java.time.LocalTime
 @OptIn(ExperimentalCoroutinesApi::class)
 class HabitFormViewModelTest {
     private lateinit var viewModel: HabitFormViewModel
+    private lateinit var savedStateHandle: SavedStateHandle
     private val habitRepository: HabitRepository = mockk()
-    private val savedStateHandle: SavedStateHandle = mockk()
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
@@ -35,8 +35,7 @@ class HabitFormViewModelTest {
 
         coEvery { habitRepository.upsert(any<Habit>()) } returns Unit
 
-        coEvery { savedStateHandle.get<Int>(key = "habitId") } returns null
-
+        savedStateHandle = SavedStateHandle(mapOf("habitId" to 0))
         viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
     }
 
@@ -124,7 +123,7 @@ class HabitFormViewModelTest {
     @Test
     fun `viewModel should load correct habit`() =
         runTest {
-            coEvery { savedStateHandle.get<Int>(key = "habitId") } returns 1
+            savedStateHandle["habitId"] = 1
             coEvery { habitRepository.getHabitById(1) } returns getHabitList()[0]
 
             viewModel = HabitFormViewModel(habitRepository, savedStateHandle)
@@ -139,7 +138,7 @@ class HabitFormViewModelTest {
         runTest {
             val habitToUpdate = getHabitList()[0]
             val habitSlot = slot<Habit>()
-            coEvery { savedStateHandle.get<Int>(key = "habitId") } returns 1
+            savedStateHandle["habitId"] = 1
             coEvery { habitRepository.getHabitById(1) } returns habitToUpdate
             coEvery { habitRepository.upsert(capture(habitSlot)) } returns Unit
 

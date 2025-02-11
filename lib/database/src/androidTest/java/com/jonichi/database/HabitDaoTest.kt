@@ -83,7 +83,7 @@ class HabitDaoTest {
     fun habitDao_retrieveHabitById() =
         runBlocking {
             addTwoHabits()
-            val habit = habitDao.getHabitById(1).first()
+            val habit = habitDao.getHabitById(1)
             assertEquals(habit1.title, habit.title)
             assertEquals(habit1.schedule, habit.schedule)
         }
