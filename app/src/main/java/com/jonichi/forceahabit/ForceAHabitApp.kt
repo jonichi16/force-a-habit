@@ -23,11 +23,13 @@ import com.jonichi.habit.ui.habitlist.HabitList
 import com.jonichi.habit.ui.habitlist.HabitListViewModel
 import com.jonichi.habit.ui.habittopbar.HabitTopBar
 import com.jonichi.habit.ui.habittopbar.HabitTopBarViewModel
+import com.jonichi.notification.NotificationViewModel
 
 @Composable
 fun ForceAHabitApp(
     navController: NavHostController = rememberNavController(),
     topBarViewModel: HabitTopBarViewModel = hiltViewModel(),
+    notificationViewModel: NotificationViewModel = hiltViewModel(),
 ) {
     val topBarState by topBarViewModel.topBarState.collectAsState()
 
@@ -72,6 +74,7 @@ fun ForceAHabitApp(
                 HabitForm(
                     state = state,
                     onEvent = habitFormViewModel::onEvent,
+                    onScheduleHabit = notificationViewModel::scheduleHabitReminder,
                     onBackAction = onBackAction,
                     modifier = Modifier.padding(16.dp),
                 )
