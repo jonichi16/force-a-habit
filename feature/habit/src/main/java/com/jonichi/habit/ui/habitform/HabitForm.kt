@@ -24,6 +24,7 @@ import java.time.LocalTime
 fun HabitForm(
     state: HabitFormUiState,
     onEvent: (HabitFormEvent) -> Unit,
+    onScheduleHabit: (Int, Int) -> Unit,
     onBackAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -68,6 +69,7 @@ fun HabitForm(
                     label = "Save",
                     onClick = {
                         onEvent(HabitFormEvent.SaveHabit(onBackAction))
+                        onScheduleHabit(state.schedule.hour, state.schedule.minute)
                     },
                 )
                 if (state.isTimeDialogOpen) {
@@ -91,6 +93,7 @@ fun HabitFormPreview() {
         HabitForm(
             state = HabitFormUiState.Success(),
             onEvent = {},
+            onScheduleHabit = { _, _ -> {} },
             onBackAction = {},
         )
     }

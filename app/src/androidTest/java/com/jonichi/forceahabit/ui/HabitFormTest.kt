@@ -71,6 +71,7 @@ class HabitFormTest {
                             }
                         }
                     },
+                    onScheduleHabit = { _, _ -> run {} },
                     onBackAction = {},
                 )
             }

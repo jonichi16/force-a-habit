@@ -22,7 +22,7 @@ class NotificationModule {
     @Provides
     @Singleton
     fun provideAlarmScheduler(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): AlarmScheduler {
         return AlarmScheduler(context)
     }
