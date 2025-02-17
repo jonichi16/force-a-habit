@@ -22,7 +22,7 @@ ksp = "2.1.10-1.0.30"
 hiltVersion = "2.55"
 hiltNavigationCompose = "1.2.0"
 roomRuntime = "2.6.1"
-activityKtx = "1.8.0"
+activityKtx = "1.10.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
