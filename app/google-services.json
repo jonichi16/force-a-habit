@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "567101423824",
+    "project_id": "force-a-habit",
+    "storage_bucket": "force-a-habit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567101423824:android:e91a5f76c6d72b3a261ed5",
+        "android_client_info": {
+          "package_name": "com.jonichi.forceahabit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATQNgyWajzron8GV94VnuSv6YnFAfUk94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
