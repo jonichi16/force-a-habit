@@ -13,20 +13,14 @@ class NotificationReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        val action = intent.action
+        Log.d("NotificationReceiver", "Alarm received! Showing notification...")
 
-        if (action == Intent.ACTION_BOOT_COMPLETED) {
-            Log.d("NotificationReceiver", "Alarm received! Showing notification...")
+        val notificationHelper =
+            EntryPointAccessors.fromApplication(
+                context,
+                NotificationHelperEntryPoint::class.java,
+            ).getNotificationHelper()
 
-            val notificationHelper =
-                EntryPointAccessors.fromApplication(
-                    context,
-                    NotificationHelperEntryPoint::class.java,
-                ).getNotificationHelper()
-
-            notificationHelper.showNotification()
-        } else {
-            Log.w("MyBroadcastReceiver", "Unexpected intent received: $action")
-        }
+        notificationHelper.showNotification()
     }
 }
